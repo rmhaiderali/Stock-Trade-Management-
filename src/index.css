@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import custom Google Font */
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+
+/* Base styles */
+* {
+  transition: all 0.3s ease-out;
+}
+
+html,
+body {
+  height: 100%;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+
+}
+
+

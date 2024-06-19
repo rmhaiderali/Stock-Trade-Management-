@@ -46,29 +46,33 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="flex">
-        <div className="w-1/4 p-4">
-          <Positions positions={positions} />
+    <div className="flex flex-col lg:flex-row">
+      {/* Left Column */}
+      <div className="lg:w-1/4 p-4">
+        <Positions positions={positions} />
+      </div>
+
+      {/* Middle Column */}
+      <div className="lg:w-1/2 p-4">
+        <Chart
+          stockName={headerData.stockName}
+          positionValue={headerData.positionValue}
+          todayGainLoss={headerData.todayGainLoss}
+          positionGainLoss={headerData.positionGainLoss}
+          shares={headerData.shares}
+        />
+        <Strategy strategies={strategies} />
+      </div>
+
+      {/* Right Column */}
+      <div className="lg:w-1/4 p-4">
+        <div className="my-3 rounded-lg">
+          <VideoPlayer />
         </div>
-        <div className="w-1/2 p-4">
-          <Chart
-            stockName={headerData.stockName}
-            positionValue={headerData.positionValue}
-            todayGainLoss={headerData.todayGainLoss}
-            positionGainLoss={headerData.positionGainLoss}
-            shares={headerData.shares}
-          />
-          <Strategy strategies={strategies} />
-        </div>
-          
-        <div className="w-1/4 p-4">
-          <div className="my-3 rounded-lg ">
-        <VideoPlayer/>
-        </div>
-          <Market markets={markets} />
-        </div>
+        <Market markets={markets} />
       </div>
     </div>
+  </div>
   );
 };
 

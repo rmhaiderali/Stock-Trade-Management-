@@ -4,6 +4,7 @@ import Chart from "./Components/Chart";
 import Strategy from "./Components/Strategy";
 import Market from "./Components/Market";
 import VideoPlayer from "./Components/videoplayer";
+import Navbar from "./Components/Header/Navbar";
 
 const App = () => {
   const [headerData, setHeaderData] = useState({
@@ -20,6 +21,9 @@ const App = () => {
     { name: "ARM", price: 175.23, change: 1.06, percent: 0.6 },
     { name: "MSFT", price: 175.23, change: 1.06, percent: 0.6 },
     { name: "JPM", price: 175.23, change: 1.06, percent: 0.6 },
+    { name: "GOOG", price: 175.23, change: 1.06, percent: 0.6 },
+    { name: "TSLA", price: 175.23, change: 1.06, percent: 0.6 },
+    { name: "COIN", price: 175.23, change: 1.06, percent: 0.6 },
     { name: "GOOG", price: 175.23, change: 1.06, percent: 0.6 },
     { name: "TSLA", price: 175.23, change: 1.06, percent: 0.6 },
     { name: "COIN", price: 175.23, change: 1.06, percent: 0.6 },
@@ -45,10 +49,12 @@ const App = () => {
   ]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div>
+      <Navbar/>
+    <div className="min-h-screen ">
     <div className="flex flex-col lg:flex-row">
       {/* Left Column */}
-      <div className="lg:w-1/4 p-4">
+      <div className="lg:w-1/4">
         <Positions positions={positions} />
       </div>
 
@@ -72,6 +78,7 @@ const App = () => {
         <Market markets={markets} />
       </div>
     </div>
+  </div>
   </div>
   );
 };

@@ -17,18 +17,13 @@ const Strategy = ({ strategies }) => {
   };
 
   // Define an array of background colors
-  const bgColors = [
-    "bg-[#38B6FF]",
-    "bg-[#FF66C4]",
-    "bg-[#FFBD59]",
-    "bg-[#7ED957]",
-  ];
+
 
   return (
     <div className="p-4">
     {/* Modes section */}
     <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
-      <div className="flex gap-4 mb-4 md:mb-0 bg-gray-300 md:p-1 md:rounded-lg md:justify-between">
+      <div className="flex gap-4 mb-4 md:mb-0 bg-gray-200 md:p-1 md:rounded-lg md:justify-between">
         {modes.map((m) => (
           <div
             key={m.key}
@@ -50,8 +45,8 @@ const Strategy = ({ strategies }) => {
         <div className="rounded-full bg-red-500 p-2">
           <FaArrowDown className="text-white text-xl" />
         </div>
-        <div className="rounded-full bg-gray-500 p-2">
-          <FaMinus className="text-white text-xl" />
+        <div className="rounded-full bg-gray-300 p-2">
+          <FaMinus className=" text-xl" />
         </div>
         <div className="rounded-full bg-green-500 p-2">
           <FaArrowUp className="text-white text-xl" />
@@ -63,12 +58,12 @@ const Strategy = ({ strategies }) => {
     {strategies.map((strategy, index) => (
       <div
         key={index}
-        className={`mb-4 ${bgColors[index % bgColors.length]} text-white rounded-full p-2`}
+        className={`mb-4 bg-gray-200 text-black rounded-lg p-2`}
       >
         <div className="flex flex-col md:flex-row md:justify-between md:items-center">
           <h3 className="text-lg">{strategy.name}</h3>
           <div className="flex gap-3 mt-2 md:mt-0">
-            <div className="flex flex-col">
+            <div className="flex flex-col justify-center items-center align-middle text-center">
               <p>${strategy.maxProfit.toLocaleString()}K</p>
               <p>Max Profit</p>
             </div>
@@ -77,7 +72,7 @@ const Strategy = ({ strategies }) => {
               <p>Max Loss</p>
             </div>
             {/* Optional: You can keep the dropdown icon if needed */}
-            <FaAngleDown className="dropdown-icon text-xl mt-4 md:mt-0" />
+            <FaAngleDown className="dropdown-icon text-xl  md:mt-0" />
           </div>
         </div>
       </div>

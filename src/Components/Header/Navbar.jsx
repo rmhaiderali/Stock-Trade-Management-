@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faChevronDown, faTimes, faChartLine, faComments, faShieldAlt, faPlug, faCogs, faPlayCircle, faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   const [isProductMenuOpen, setIsProductMenuOpen] = useState(false);
@@ -111,27 +112,27 @@ function Navbar() {
                     </a>
                     <a href="#" className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
                       <FontAwesomeIcon icon={faPhoneAlt} className="h-5 w-5 flex-none text-gray-400" />
-                      Contact sales
+                      Contact 
                     </a>
                   </div>
                 </div>
               )}
             </div>
             <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-              Features
+              Position
             </a>
             <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-              Marketplace
+              Markets
             </a>
             <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-              Company
+              Startgey
             </a>
           </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <Link to='/login' className="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
               Log in <span aria-hidden="true">→</span>
             </a>
-          </div>
+          </Link>
         </nav>
         {/* Mobile menu, show/hide based on menu open state. */}
         <div className={`lg:hidden fixed inset-0 z-50 ${isMobileMenuOpen ? 'block' : 'hidden'}`} role="dialog" aria-modal="true">

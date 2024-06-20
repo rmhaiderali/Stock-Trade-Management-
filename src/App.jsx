@@ -51,12 +51,44 @@ const App = () => {
   ]);
 
   const [strategies, setStrategies] = useState([
-    { name: 'Protective Put', maxProfit: 100000, maxLoss: 1500 },
-    { name: 'Covered Call', maxProfit: 5525, maxLoss: 775 },
-    { name: 'Collar', maxProfit: 9400, maxLoss: 1250 },
-    { name: 'Iron condor', maxProfit: 100, maxLoss: 1550 },
+    { 
+      name: 'Protective Put', 
+      maxProfit: 100000, 
+      maxLoss: 1500,
+      strikePrice: 180,
+      expirationDate: '2024-12-31',
+      optionPrice: 2.50,
+      image: 'https://www.projectfinance.com/wp-content/uploads/2022/01/married-put.png.webp'
+    },
+    { 
+      name: 'Covered Call', 
+      maxProfit: 5525, 
+      maxLoss: 775,
+      strikePrice: 160,
+      expirationDate: '2024-10-15',
+      optionPrice: 1.75,
+      image: 'https://images.prismic.io/premia-academy/279a62aa-bbb5-4ac1-8c7f-5333a1da373b_premia-academy-covered-call.png?auto=compress%2Cformat&fit=max&w=1920'
+    },
+    { 
+      name: 'Collar', 
+      maxProfit: 9400, 
+      maxLoss: 1250,
+      strikePrice: 175,
+      expirationDate: '2024-11-30',
+      optionPrice: 2.00,
+      image: 'https://www.projectfinance.com/wp-content/uploads/2022/01/collar-trade-options.png.webp'
+    },
+    { 
+      name: 'Iron Condor', 
+      maxProfit: 100, 
+      maxLoss: 1550,
+      strikePrice: 190,
+      expirationDate: '2025-01-15',
+      optionPrice: 3.25,
+      image: 'https://miro.medium.com/v2/resize:fit:1100/format:webp/1*rOqG_EeRJJGxc8erdLTsFA.jpeg'
+    },
   ]);
-
+  
   const [selectedStock, setSelectedStock] = useState('ARM'); // Initial selected stock
 
   const handleSelectStock = (stockName) => {

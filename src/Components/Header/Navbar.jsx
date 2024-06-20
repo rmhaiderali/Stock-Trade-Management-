@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faChevronDown, faTimes, faChartLine, faComments, faShieldAlt, faPlug, faCogs, faPlayCircle, faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faChevronDown, faTimes, faChartLine, faComments, faShieldAlt, faPlug, faCogs, faPlayCircle, faPhoneAlt, faPerson } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
@@ -44,28 +44,17 @@ function Navbar() {
               {isProductMenuOpen && (
                 <div className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                   <div className="p-4">
+                   
                     <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
                       <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <FontAwesomeIcon icon={faChartLine} className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
+                        <FontAwesomeIcon icon={faPerson} className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
                       </div>
                       <div className="flex-auto">
-                        <a href="#" className="block font-semibold text-gray-900">
-                          Analytics
+                        <Link to="/profile" className="block font-semibold text-gray-900">
+                          Profile
                           <span className="absolute inset-0" />
-                        </a>
-                        <p className="mt-1 text-gray-600">Get a better understanding of your traffic</p>
-                      </div>
-                    </div>
-                    <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <FontAwesomeIcon icon={faComments} className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
-                      </div>
-                      <div className="flex-auto">
-                        <a href="#" className="block font-semibold text-gray-900">
-                          Engagement
-                          <span className="absolute inset-0" />
-                        </a>
-                        <p className="mt-1 text-gray-600">Speak directly to your customers</p>
+                        </Link>
+                        <p className="mt-1 text-gray-600">Check your profile</p>
                       </div>
                     </div>
                     <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
@@ -80,37 +69,13 @@ function Navbar() {
                         <p className="mt-1 text-gray-600">Your customers’ data will be safe and secure</p>
                       </div>
                     </div>
-                    <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <FontAwesomeIcon icon={faPlug} className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
-                      </div>
-                      <div className="flex-auto">
-                        <a href="#" className="block font-semibold text-gray-900">
-                          Integrations
-                          <span className="absolute inset-0" />
-                        </a>
-                        <p className="mt-1 text-gray-600">Connect with third-party tools</p>
-                      </div>
-                    </div>
-                    <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <FontAwesomeIcon icon={faCogs} className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
-                      </div>
-                      <div className="flex-auto">
-                        <a href="#" className="block font-semibold text-gray-900">
-                          Automations
-                          <span className="absolute inset-0" />
-                        </a>
-                        <p className="mt-1 text-gray-600">Build strategic funnels that will convert</p>
-                      </div>
-                    </div>
-                  </div>
+                                      </div>
                   <div className="grid grid-cols-1 divide-x divide-gray-900/5 bg-gray-50">
                   
-                    <a href="#" className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
+                    <Link to="/contact" className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
                       <FontAwesomeIcon icon={faPhoneAlt} className="h-5 w-5 flex-none text-gray-400" />
                       Contact 
-                    </a>
+                    </Link>
                   </div>
                 </div>
               )}

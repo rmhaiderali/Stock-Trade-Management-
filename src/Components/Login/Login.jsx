@@ -58,7 +58,7 @@ function Login() {
           Submit
         </button>
         <div className="text-sm text-center mt-4">
-          <span className="text-gray-300">
+          <span className="">
             Don't have an account?
           </span>
           <Link

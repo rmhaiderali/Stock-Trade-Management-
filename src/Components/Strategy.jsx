@@ -29,7 +29,7 @@ const Strategy = ({ strategies }) => {
             key={m.key}
             className={`cursor-pointer flex items-center gap-4 ${
               mode === m.key
-                ? "bg-gray-700 px-3 py-1 text-white rounded-md"
+                ? "bg-[#2257D6] px-3 py-1 text-white rounded-md"
                 : "text-gray-700 "
             }`}
             onClick={() => handleModeChange(m.key)}
@@ -58,7 +58,7 @@ const Strategy = ({ strategies }) => {
     {strategies.map((strategy, index) => (
       <div
         key={index}
-        className={`mb-4 bg-gray-200 text-black rounded-lg p-2`}
+        className={`mb-4 bg-[#2257D6] text-white rounded-lg p-2`}
       >
         <div className="flex flex-col md:flex-row md:justify-between md:items-center">
           <h3 className="text-lg">{strategy.name}</h3>

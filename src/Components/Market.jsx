@@ -8,14 +8,14 @@ const Market = ({ markets }) => {
   };
 
   return (
-    <div className="p-4 rounded-lg">
+    <div className="p-4 rounded-lg ">
       <h2 className="text-3xl mb-4 font-bold">Markets</h2>
-      <div className="max-h-[390px] overflow-y-auto scrollbar-thin scrollbar-thumb-white scrollbar-track-gray-800 scrollbar-thumb-rounded-full">
+      <div className="max-h-[390px] overflow-y-auto scrollbar-thin scrollbar-thumb-white scrollbar-track-[#2257D6] scrollbar-thumb-rounded-full">
         {markets.map((market, index) => (
           <div
             key={index}
             onClick={() => handleClick(index)}
-            className={`flex justify-between mb-2 border-b-2 pb-3 cursor-pointer ${selectedIndex === index ? 'border-l-4 border-blue-500' : ''}`}
+            className={`flex justify-between mb-2 border-b-2 pb-3 cursor-pointer pl-2 ${selectedIndex === index ? 'border-l-4 border-white rounded-b-md' : ''}`}
           >
             <div className='flex flex-col'>
               <span className='text-2xl font-bold'>{market.name}</span>

@@ -24,10 +24,10 @@ function Navbar() {
       <header className="bg-white">
         <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
+            <Link to='/'  className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img className="h-8 w-auto" src="/logo.png" alt="" />
-            </a>
+            </Link>
           </div>
           <div className="flex lg:hidden">
             <button type="button" className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" onClick={toggleMobileMenu}>
@@ -105,11 +105,8 @@ function Navbar() {
                       </div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                    <a href="#" className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
-                      <FontAwesomeIcon icon={faPlayCircle} className="h-5 w-5 flex-none text-gray-400" />
-                      Watch demo
-                    </a>
+                  <div className="grid grid-cols-1 divide-x divide-gray-900/5 bg-gray-50">
+                  
                     <a href="#" className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
                       <FontAwesomeIcon icon={faPhoneAlt} className="h-5 w-5 flex-none text-gray-400" />
                       Contact 

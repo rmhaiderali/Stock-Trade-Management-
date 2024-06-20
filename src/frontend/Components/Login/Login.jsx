@@ -6,10 +6,7 @@ function Login() {
     <div className="flex flex-col md:flex-row items-center mt-20 md:justify-center md:gap-10 bg-[#2257D6] text-white">
       <form className="max-w-xl mx-auto md:w-1/2 bg-white text-black py-10 px-20 m-10 rounded-xl">
         <div className="mb-5">
-          <label
-            htmlFor="email"
-            className="block mb-2 text-sm font-medium"
-          >
+          <label htmlFor="email" className="block mb-2 text-sm font-medium">
             Your email
           </label>
           <input
@@ -21,10 +18,7 @@ function Login() {
           />
         </div>
         <div className="mb-5">
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium"
-          >
+          <label htmlFor="password" className="block mb-2 text-sm font-medium">
             Your password
           </label>
           <input
@@ -58,9 +52,7 @@ function Login() {
           Submit
         </button>
         <div className="text-sm text-center mt-4">
-          <span className="">
-            Don't have an account?
-          </span>
+          <span className="">Don't have an account?</span>
           <Link
             to="/signup"
             className="ml-1 text-blue-400 underline focus:outline-none"
@@ -70,12 +62,15 @@ function Login() {
         </div>
       </form>
       <div className="mt-10 md:mt-0 md:w-1/2 px-5 md:px-10">
-        <h2 className="text-2xl font-semibold mb-4">AI Stock Trade Recommendations</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          AI Stock Trade Recommendations
+        </h2>
         <p className=" mb-4">
-          Leverage the power of artificial intelligence to make informed trading decisions. Our AI-driven platform provides real-time stock recommendations, helping you maximize your investment potential and stay ahead of the market trends.
+          Leverage the power of artificial intelligence to make informed trading
+          decisions. Our AI-driven platform provides real-time stock
+          recommendations, helping you maximize your investment potential and
+          stay ahead of the market trends.
         </p>
- 
-      
       </div>
     </div>
   );

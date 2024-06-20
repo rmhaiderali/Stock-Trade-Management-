@@ -134,26 +134,34 @@ function Signup() {
             </button>
           </form>
           <div className="mt-4 text-sm text-center md:w-1/2 ml-10">
-        <span className="text-gray-600 dark:text-gray-300">
-          If you have an account?
-        </span>
-        <Link
-          to="/login"
-          className="ml-1 text-blue-600 dark:text-blue-400 underline focus:outline-none"
-        >
-          Login
-        </Link>
-      </div>
+            <span className="text-gray-600 dark:text-gray-300">
+              If you have an account?
+            </span>
+            <Link
+              to="/login"
+              className="ml-1 text-blue-600 dark:text-blue-400 underline focus:outline-none"
+            >
+              Login
+            </Link>
+          </div>
         </div>
-        
+
         {/* Right Side - Text Content */}
         <div className="md:w-1/2 bg-[#2257D6] dark:bg-gray-700 p-8">
-          <h2 className="text-2xl font-semibold mb-4 text-white">AI Stock Trade Recommendations</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-white">
+            AI Stock Trade Recommendations
+          </h2>
           <p className=" dark:text-gray-300 mb-4 text-white">
-            Leverage the power of artificial intelligence to make informed trading decisions. Our AI-driven platform provides real-time stock recommendations, helping you maximize your investment potential and stay ahead of the market trends.
+            Leverage the power of artificial intelligence to make informed
+            trading decisions. Our AI-driven platform provides real-time stock
+            recommendations, helping you maximize your investment potential and
+            stay ahead of the market trends.
           </p>
           <p className=" dark:text-gray-300 text-white">
-            Sign up today to access personalized stock trade insights, historical performance analysis, and more. Join a community of savvy investors who are already reaping the benefits of AI-powered trading.
+            Sign up today to access personalized stock trade insights,
+            historical performance analysis, and more. Join a community of savvy
+            investors who are already reaping the benefits of AI-powered
+            trading.
           </p>
         </div>
       </div>

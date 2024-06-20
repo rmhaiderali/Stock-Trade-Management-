@@ -1,7 +1,7 @@
 // src/components/VideoPlayer.jsx
 
-import React from 'react';
-import TradingViewWidget, { Themes } from 'react-tradingview-widget';
+import React from "react";
+import TradingViewWidget, { Themes } from "react-tradingview-widget";
 
 const VideoPlayer = ({ selectedStock }) => {
   return (

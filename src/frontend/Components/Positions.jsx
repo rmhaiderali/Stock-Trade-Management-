@@ -1,6 +1,6 @@
 // Positions.jsx
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Positions = ({ positions, onSelectStock }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -20,8 +20,8 @@ const Positions = ({ positions, onSelectStock }) => {
             onClick={() => handleClick(index)}
             className={`flex justify-between mb-2 border-b-2 pb-3 cursor-pointer ${
               selectedIndex === index
-                ? 'border-l-4 border-white rounded-b-md'
-                : ' border-black'
+                ? "border-l-4 border-white rounded-b-md"
+                : " border-black"
             }`}
           >
             <div className="flex flex-col pl-2">
@@ -32,7 +32,7 @@ const Positions = ({ positions, onSelectStock }) => {
             </div>
             <span
               className={`ml-4 font-bold text-xl w-28 ${
-                position.change > 0 ? 'text-green-500' : 'text-red-500'
+                position.change > 0 ? "text-green-500" : "text-red-500"
               }`}
             >
               <div className="flex items-center ">

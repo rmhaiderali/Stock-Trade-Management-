@@ -15,7 +15,7 @@ function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
 
     delete data.cpassword
 
-    const response = await axios.post("/signup", data);
+    const response = await axios.post("/api/signup", data);
     if (response.data.success) {
       setIsSignedIn(true);
       setUserInfo(response.data.data);

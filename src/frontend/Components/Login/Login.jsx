@@ -8,7 +8,7 @@ function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
     // console.log(watch("email"));
 
   const onSubmit = async (data) => {
-    const response = await axios.post("/signin", data);
+    const response = await axios.post("/api/signin", data);
     if (response.data.success) {
       setIsSignedIn(true);
       setUserInfo(response.data.data);

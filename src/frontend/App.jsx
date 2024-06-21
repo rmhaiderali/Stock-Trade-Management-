@@ -119,7 +119,7 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await axios("/validateuser");
+      const response = await axios("/api/validateuser");
       if (response.data.success) {
         setIsSignedIn(true);
         setUserInfo(response.data.data);

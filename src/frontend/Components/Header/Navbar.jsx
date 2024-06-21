@@ -155,7 +155,7 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
                 onClick={async () => {
                   if (!confirm("Do you want to log out?")) return;
 
-                  const response = await axios.post("/signout");
+                  const response = await axios.post("/api/signout");
                   if (response.data.success) {
                     setIsSignedIn(false);
                     setUserInfo(null);

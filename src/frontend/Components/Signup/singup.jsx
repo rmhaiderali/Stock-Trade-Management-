@@ -13,14 +13,14 @@ function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
     if (data.password.length < 8)
       return alert("Password must be at least 8 characters long");
 
-    delete data.cpassword
+    delete data.cpassword;
 
     const response = await axios.post("/api/signup", data);
     if (response.data.success) {
       setIsSignedIn(true);
       setUserInfo(response.data.data);
       navigate("/");
-    } else alert(response.data.message);
+    } else alert(response.data.message || "Something went wrong");
   };
 
   const navigate = useNavigate();

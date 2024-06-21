@@ -5,7 +5,7 @@ import axios from "../../custom-axios";
 
 function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
   const { register, handleSubmit, watch, formState } = useForm();
-    // console.log(watch("email"));
+  // console.log(watch("email"));
 
   const onSubmit = async (data) => {
     const response = await axios.post("/api/signin", data);
@@ -13,7 +13,7 @@ function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
       setIsSignedIn(true);
       setUserInfo(response.data.data);
       navigate("/");
-    } else alert(response.data.message);
+    } else alert(response.data.message || "Something went wrong");
   };
 
   const navigate = useNavigate();

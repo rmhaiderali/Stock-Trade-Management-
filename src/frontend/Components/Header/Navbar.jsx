@@ -160,7 +160,7 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
                     setIsSignedIn(false);
                     setUserInfo(null);
                     navigate("/");
-                  } else alert(response.data.message);
+                  } else alert(response.data.message || "Something went wrong");
                 }}
               >
                 {userInfo?.name}

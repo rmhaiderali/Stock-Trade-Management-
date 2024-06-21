@@ -1,31 +1,55 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from "../../custom-axios";
 
-function Login() {
+function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
+  const { register, handleSubmit, watch, formState } = useForm();
+    // console.log(watch("email"));
+
+  const onSubmit = async (data) => {
+    const response = await axios.post("/signin", data);
+    if (response.data.success) {
+      setIsSignedIn(true);
+      setUserInfo(response.data.data);
+      navigate("/");
+    } else alert(response.data.message);
+  };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSignedIn) navigate("/");
+  }, [isSignedIn]);
+
   return (
     <div className="flex flex-col md:flex-row items-center mt-20 md:justify-center md:gap-10 bg-[#2257D6] text-white">
-      <form className="max-w-xl mx-auto md:w-1/2 bg-white text-black py-10 px-20 m-10 rounded-xl">
+      <form
+        className="max-w-xl mx-auto md:w-1/2 bg-white text-black py-10 px-20 m-10 rounded-xl"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="mb-5">
           <label htmlFor="email" className="block mb-2 text-sm font-medium">
-            Your email
+            Email
           </label>
           <input
             type="email"
             id="email"
             className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="name@example.com"
-            required=""
+            required
+            {...register("email")}
           />
         </div>
         <div className="mb-5">
           <label htmlFor="password" className="block mb-2 text-sm font-medium">
-            Your password
+            Password
           </label>
           <input
             type="password"
             id="password"
             className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            required=""
+            required
+            {...register("password")}
           />
         </div>
         <div className="flex items-start mb-5">
@@ -35,7 +59,6 @@ function Login() {
               type="checkbox"
               defaultValue=""
               className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-              required=""
             />
           </div>
           <label

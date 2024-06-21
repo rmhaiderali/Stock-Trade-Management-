@@ -13,9 +13,12 @@ import {
   faPhoneAlt,
   faPerson,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../custom-axios";
 
-function Navbar() {
+function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
+  const navigate = useNavigate();
+
   const [isProductMenuOpen, setIsProductMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -145,14 +148,32 @@ function Navbar() {
               Startgey
             </a>
           </div>
-          <Link to="/login" className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a
-              href="#"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Log in <span aria-hidden="true">→</span>
-            </a>
-          </Link>
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+            {userInfo?.name ? (
+              <div
+                className="font-semibold leading-6 text-gray-900"
+                onClick={async () => {
+                  if (!confirm("Do you want to log out?")) return;
+
+                  const response = await axios.post("/signout");
+                  if (response.data.success) {
+                    setIsSignedIn(false);
+                    setUserInfo(null);
+                    navigate("/");
+                  } else alert(response.data.message);
+                }}
+              >
+                {userInfo?.name}
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                Log in <span aria-hidden="true">→</span>
+              </Link>
+            )}
+          </div>
         </nav>
         {/* Mobile menu, show/hide based on menu open state. */}
         <div
@@ -271,12 +292,14 @@ function Navbar() {
                   </a>
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    Log in
-                  </a>
+                  {!userInfo?.name && (
+                    <Link
+                      to="/login"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      Log in
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>

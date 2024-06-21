@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Positions from "./Components/Positions";
 import Chart from "./Components/Chart";
 import Strategy from "./Components/Strategy";
@@ -12,6 +12,7 @@ import Profile from "./Components/Profilesection/Profile";
 import VideoPlayer from "./Components/videoplayer";
 import Contact from "./Components/Contact/Contact";
 import ContactForm from "./Components/Contact/Contact";
+import axios from "./custom-axios";
 
 const App = () => {
   const initialHeaderData = {
@@ -113,10 +114,27 @@ const App = () => {
     }
   };
 
+  const [isSignedIn, setIsSignedIn] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const response = await axios("/validateuser");
+      if (response.data.success) {
+        setIsSignedIn(true);
+        setUserInfo(response.data.data);
+      }
+    })();
+  }, []);
+
   return (
     <BrowserRouter>
       <div>
-        <Navbar />
+        <Navbar
+          setIsSignedIn={setIsSignedIn}
+          userInfo={userInfo}
+          setUserInfo={setUserInfo}
+        />
         <Routes>
           <Route
             path="/"
@@ -149,10 +167,36 @@ const App = () => {
               </div>
             }
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/login"
+            element={
+              <Login
+                isSignedIn={isSignedIn}
+                setIsSignedIn={setIsSignedIn}
+                setUserInfo={setUserInfo}
+              />
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <Signup
+                isSignedIn={isSignedIn}
+                setIsSignedIn={setIsSignedIn}
+                setUserInfo={setUserInfo}
+              />
+            }
+          />
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<ContactForm />} />
+          <Route
+            path="/*"
+            element={
+              <div className="flex-grow flex justify-center items-center">
+                <div>404 - PAGE NOT FOUND</div>
+              </div>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>

@@ -5,7 +5,6 @@ const googleGenAI = new GoogleGenerativeAI(process.env.GOOGLE_GEN_AI_API_KEY);
 
 export default async function suggestUsingAI(req, res) {
   const { message } = req.body;
-  console.log({ message });
 
   const gemini = googleGenAI.getGenerativeModel({
     model: "gemini-1.5-flash",

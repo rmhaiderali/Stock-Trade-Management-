@@ -3,6 +3,13 @@ import OpenAI from "openai";
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export default async function suggestUsingAI(req, res) {
+  // Ensure the API key is set
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error(
+      "Missing OpenAI API key. Please set the OPENAI_API_KEY environment variable."
+    );
+  }
+
   try {
     // Ensure request body has the necessary data
     // const { content } = req.body;

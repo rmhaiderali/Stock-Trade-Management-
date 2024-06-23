@@ -34,20 +34,31 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
     setIsMobileMenuOpen(false);
   };
 
+  async function logout() {
+    if (!confirm("Do you want to log out?")) return;
+
+    const response = await axios.post("/api/signout");
+    if (response.data.success) {
+      setIsSignedIn(false);
+      setUserInfo(null);
+      navigate("/");
+    } else alert(response.data.message || "Something went wrong");
+  }
+
   return (
     <div>
       <header className="bg-white">
         <nav
-          className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+          className="mx-auto flex max-w-7xl items-center justify-between p-6 sm:px-8"
           aria-label="Global"
         >
-          <div className="flex lg:flex-1">
+          <div className="flex sm:flex-1">
             <Link to="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img className="h-8 w-auto" src="/logo.png" alt="" />
             </Link>
           </div>
-          <div className="flex lg:hidden">
+          <div className="flex sm:hidden">
             <button
               type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
@@ -57,7 +68,7 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
               <FontAwesomeIcon icon={faBars} className="h-6 w-6" />
             </button>
           </div>
-          <div className="hidden lg:flex lg:gap-x-12">
+          <div className="hidden sm:flex sm:gap-x-12">
             <div className="relative">
               <button
                 type="button"
@@ -148,36 +159,28 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
               Startgey
             </a>
           </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            {userInfo?.name ? (
-              <div
-                className="font-semibold leading-6 text-gray-900"
-                onClick={async () => {
-                  if (!confirm("Do you want to log out?")) return;
-
-                  const response = await axios.post("/api/signout");
-                  if (response.data.success) {
-                    setIsSignedIn(false);
-                    setUserInfo(null);
-                    navigate("/");
-                  } else alert(response.data.message || "Something went wrong");
-                }}
-              >
-                {userInfo?.name}
-              </div>
-            ) : (
-              <Link
-                to="/login"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Log in <span aria-hidden="true">→</span>
-              </Link>
-            )}
+          <div className="hidden sm:flex sm:flex-1 sm:justify-end">
+            {window.location.pathname === "/login" ||
+              (userInfo?.name ? (
+                <div
+                  className="font-semibold leading-6 text-gray-900"
+                  onClick={logout}
+                >
+                  {userInfo?.name}
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Log in <span aria-hidden="true">→</span>
+                </Link>
+              ))}
           </div>
         </nav>
         {/* Mobile menu, show/hide based on menu open state. */}
         <div
-          className={`lg:hidden fixed inset-0 z-50 ${
+          className={`sm:hidden fixed inset-0 z-50 ${
             isMobileMenuOpen ? "block" : "hidden"
           }`}
           role="dialog"
@@ -187,13 +190,9 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
           <div className="fixed inset-0" onClick={closeMobileMenu} />
           <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
+              <a href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt=""
-                />
+                <img className="h-8 w-auto" src="/logo.png" alt="" />
               </a>
               <button
                 type="button"
@@ -292,9 +291,17 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
                   </a>
                 </div>
                 <div className="py-6">
-                  {!userInfo?.name && (
+                  {userInfo?.name ? (
+                    <div
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      onClick={logout}
+                    >
+                      {userInfo?.name}
+                    </div>
+                  ) : (
                     <Link
                       to="/login"
+                      onClick={closeMobileMenu}
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                     >
                       Log in

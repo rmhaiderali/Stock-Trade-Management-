@@ -7,5 +7,5 @@ export default function signOut(req, res) {
     sameSite: "strict",
   });
 
-  return res.json(format([true, "User logged out successfully"]));
+  return res.json(format(true, "User logged out successfully"));
 }

@@ -9,13 +9,13 @@ export default async function signUp(req, res) {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
-    return res.status(400).json(format([false, "All fields are required"]));
+    return res.status(400).json(format(false, "All fields are required"));
   }
 
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    return res.status(409).json(format([false, "Email already in use"]));
+    return res.status(409).json(format(false, "Email already in use"));
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -36,10 +36,9 @@ export default async function signUp(req, res) {
   });
 
   return res.json(
-    format([
-      true,
-      "User created successfully",
-      { email: newUser.email, name: newUser.name },
-    ])
+    format(true, "User created successfully", {
+      email: newUser.email,
+      name: newUser.name,
+    })
   );
 }

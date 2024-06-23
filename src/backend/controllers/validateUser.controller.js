@@ -4,7 +4,7 @@ import format from "../utils/formatResponse.js";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
-export default async function isSignedIn(req, res) {
+export default async function validateUser(req, res) {
   const { token } = req.cookies;
 
   if (!token)

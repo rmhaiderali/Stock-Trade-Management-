@@ -1,6 +1,6 @@
 import format from "../utils/formatResponse.js";
 
-export default function logout(req, res) {
+export default function signOut(req, res) {
   res.clearCookie("token", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

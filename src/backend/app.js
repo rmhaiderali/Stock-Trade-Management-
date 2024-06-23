@@ -8,6 +8,7 @@ import signIn from "./controllers/signIn.controller.js";
 import signOut from "./controllers/signOut.controller.js";
 import changeName from "./controllers/changeName.controller.js";
 import validateUser from "./controllers/validateUser.controller.js";
+import suggestUsingAI from "./controllers/suggestUsingAI.controller.js";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.post("/api/signin", asyncErrorHandler(signIn));
 app.post("/api/signout", asyncErrorHandler(signOut));
 app.post("/api/changename", asyncErrorHandler(changeName));
 app.get("/api/validateuser", asyncErrorHandler(validateUser));
+app.get("/api/suggestUsingAI", asyncErrorHandler(suggestUsingAI));
 
 app.use((err, req, res, next) => {
   return res.status(500).json({ success: false, message: err.message });

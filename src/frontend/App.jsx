@@ -155,7 +155,10 @@ const App = () => {
                       positionGainLoss={headerData.positionGainLoss}
                       shares={headerData.shares}
                     />
-                    <Strategy strategies={strategies} />
+                    <Strategy
+                      strategies={strategies}
+                      setStrategies={setStrategies}
+                    />
                   </div>
                   <div className="lg:w-1/4 px-4">
                     <div className="mb-3 rounded-lg">

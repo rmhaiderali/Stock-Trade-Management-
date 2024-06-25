@@ -99,8 +99,7 @@ const Strategy = ({ strategies, setStrategies }) => {
               const response = await axios.post("/api/suggestUsingAI", {
                 message: value,
               });
-              if (response.data.success)
-                 console.log(response.data.data);
+              if (response.data.success) setStrategies(response.data.data);
               setIsLoading(false);
             }}
             disabled={isLoading}

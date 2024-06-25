@@ -21,14 +21,14 @@ const Strategy = ({ strategies, setStrategies }) => {
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     setIsLoading(true);
-  //     const response = await axios("/api/suggestUsingAI");
-  //     if (response.data.success) setStrategies(response.data.data);
-  //     setIsLoading(false);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      const response = await axios.post("/api/suggestUsingAI");
+      if (response.data.success) setStrategies(response.data.data);
+      setIsLoading(false);
+    })();
+  }, []);
 
   return (
     <div className="p-4">

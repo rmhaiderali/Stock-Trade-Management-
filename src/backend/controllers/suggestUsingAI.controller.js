@@ -4,6 +4,7 @@ import format from "../utils/formatResponse.js";
 export default async function suggestUsingAI(req, res) {
   const { message } = req.body;
 
+  console.log("message is here ",message);
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   const result = await openai.chat.completions.create({

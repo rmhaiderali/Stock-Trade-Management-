@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import axios from "../custom-axios";
 
-const Strategy = ({ strategies, setStrategies }) => {
+const Strategy = ({ strategies, setStrategies ,headerData}) => {
   const [expandedStrategy, setExpandedStrategy] = useState(null);
 
   const toggleExpand = (strategyName) => {
@@ -28,7 +28,7 @@ const Strategy = ({ strategies, setStrategies }) => {
       if (response.data.success) setStrategies(response.data.data);
       setIsLoading(false);
     })();
-  }, []);
+  }, [headerData]);
 
   return (
     <div className="p-4">

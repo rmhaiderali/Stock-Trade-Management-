@@ -158,6 +158,7 @@ const App = () => {
                     <Strategy
                       strategies={strategies}
                       setStrategies={setStrategies}
+                      headerData={headerData}
                     />
                   </div>
                   <div className="lg:w-1/4 px-4">

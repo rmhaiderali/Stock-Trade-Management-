@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const { log } = console;
 
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://0.0.0.0:27017/stock-trade-management";
+const MONGODB_URI = "mongodb+srv://admin:nwui7378@cluster0.jvyr9g8.mongodb.net/stock-trade-management"
+  
 
 mongoose.connection.on("error", (err) => console.error(err));
 

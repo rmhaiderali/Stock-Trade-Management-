@@ -1,16 +1,32 @@
 import OpenAI from "openai";
 import format from "../utils/formatResponse.js";
+import genrateRandomStocks from "../utils/genrateRandomStocks.js";
 
 export default async function suggestUsingAI(req, res) {
-  const { message } = req.body;
+  const { message, stock = "APLL" } = req.body;
 
-  console.log("message is here ",message);
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+  const d = genrateRandomStocks();
+
+  console.log({ message, stock, randomGenratedStocks: d });
 
   const result = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     response_format: { type: "json_object" },
     messages: [
+      {
+        role: "system",
+        content: `
+        You are providing strategies to help me manage a stock trade I'm in.
+        I purchased ${stock} at ${d.buy_price}. The price has ${d.trend} in
+        the past ${d.past_duration} to ${d.current_price}. I'm look for options
+        layer strategies with a goal of the position becoming profitable in the
+        next ${d.future_duration}. My market sentiment is ${d.market_sentiment}.
+        Implied volatility for ${stock} is at ${d.implied_volatility} vs the
+        historical volatility average of ${d.historical_volatility_average}.
+        `,
+      },
       {
         role: "system",
         content: `
@@ -47,9 +63,6 @@ export default async function suggestUsingAI(req, res) {
         content: message || "",
       },
     ],
-    // temperature: 0.7,
-    // max_tokens: 256,
-    // top_p: 1,
   });
 
   console.log(result.choices[0].message.content);

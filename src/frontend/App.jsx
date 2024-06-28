@@ -158,7 +158,7 @@ const App = () => {
                     <Strategy
                       strategies={strategies}
                       setStrategies={setStrategies}
-                      headerData={headerData}
+                      selectedStock={selectedStock}
                     />
                   </div>
                   <div className="lg:w-1/4 px-4">

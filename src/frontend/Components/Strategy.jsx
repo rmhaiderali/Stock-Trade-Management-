@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import axios from "../custom-axios";
 
-const Strategy = ({ strategies, setStrategies ,headerData}) => {
+const Strategy = ({ strategies, setStrategies, selectedStock }) => {
   const [expandedStrategy, setExpandedStrategy] = useState(null);
 
   const toggleExpand = (strategyName) => {
@@ -13,7 +13,7 @@ const Strategy = ({ strategies, setStrategies ,headerData}) => {
     }
   };
 
-  function textAreaAdjust({ target: element }) {
+  function textAreaAdjust(element) {
     element.style.height = "1px";
     element.style.height = element.scrollHeight + "px";
   }
@@ -24,11 +24,13 @@ const Strategy = ({ strategies, setStrategies ,headerData}) => {
   useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const response = await axios.post("/api/suggestUsingAI");
+      const response = await axios.post("/api/suggestUsingAI", {
+        stock: selectedStock,
+      });
       if (response.data.success) setStrategies(response.data.data);
       setIsLoading(false);
     })();
-  }, [headerData]);
+  }, [selectedStock]);
 
   return (
     <div className="p-4">
@@ -98,6 +100,7 @@ const Strategy = ({ strategies, setStrategies ,headerData}) => {
               setIsLoading(true);
               const response = await axios.post("/api/suggestUsingAI", {
                 message: value,
+                stock: selectedStock,
               });
               if (response.data.success) setStrategies(response.data.data);
               setIsLoading(false);
@@ -111,10 +114,12 @@ const Strategy = ({ strategies, setStrategies ,headerData}) => {
         <textarea
           value={value}
           className="pt-2 bg-[#0000] min-h-0 outline-none placeholder-blue-200"
-          onKeyDown={textAreaAdjust}
           rows={1}
           style={{ overflow: "hidden" }}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => {
+            setValue(e.target.value);
+            textAreaAdjust(e.target);
+          }}
           placeholder="Whats in your mind"
         ></textarea>
       </div>

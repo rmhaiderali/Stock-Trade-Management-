@@ -10,6 +10,7 @@ export default async function suggestUsingAI(req, res) {
     sell_in,
     buy_ago_ms,
     sell_in_ms,
+    mode = "Max Gain",
   } = req.body;
 
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -57,8 +58,13 @@ export default async function suggestUsingAI(req, res) {
           ]
         }
 
-        You must genrate 8 strategies.
+        Max Profit: Must be grater then 100 dollars.
+
+        You must genrate 4 strategies.
         You must provide only one value for each property in each strategy.
+
+        There are total 3 modes of strategies: "Max Gain", "Balanced" and "Protect".
+        For this scenario, you must provide strategies only for "${mode}" mode.
         `,
       },
       {

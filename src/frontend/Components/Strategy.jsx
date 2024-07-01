@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
 import axios from "../custom-axios";
+import { FaAngleDown, FaArrowUp, FaArrowDown, FaMinus } from "react-icons/fa";
 
 const Strategy = ({ strategies, setStrategies, selectedStock }) => {
   const [expandedStrategy, setExpandedStrategy] = useState(null);
@@ -47,6 +47,9 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
     }
   }
 
+  const [mode, setMode] = useState("Max Gain");
+  const modes = ["Max Gain", "Balanced", "Protect"];
+
   useEffect(() => {
     (async () => {
       setIsLoading(true);
@@ -63,11 +66,12 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
         sell_in,
         buy_ago_ms,
         sell_in_ms,
+        mode,
       });
       if (response.data.success) setStrategies(response.data.data);
       setIsLoading(false);
     })();
-  }, [selectedStock]);
+  }, [selectedStock, mode]);
 
   function bgColor(index) {
     switch (index % 4) {
@@ -84,6 +88,36 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
 
   return (
     <div className="p-4">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+        <div className="flex gap-4 mb-4 md:mb-0 bg-gray-200 md:p-1 md:rounded-lg md:justify-between">
+          {modes.map((m) => (
+            <div
+              key={m}
+              className={
+                "cursor-pointer flex items-center gap-4 px-3 py-1 " +
+                (mode === m
+                  ? "bg-blue-600 text-white rounded-md"
+                  : "text-gray-700")
+              }
+              onClick={() => setMode(m)}
+            >
+              <span className={mode === m ? "font-bold" : ""}>{m}</span>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="hidden md:block">Market Outlet</span>
+          <div className="rounded-full bg-red-500 p-2">
+            <FaArrowDown className="text-white text-xl" />
+          </div>
+          <div className="rounded-full bg-gray-300 p-2">
+            <FaMinus className=" text-xl" />
+          </div>
+          <div className="rounded-full bg-green-500 p-2">
+            <FaArrowUp className="text-white text-xl" />
+          </div>
+        </div>
+      </div>
       {isLoading ? (
         <div className="text-center mb-2">Loading</div>
       ) : (
@@ -165,6 +199,7 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
                 sell_in,
                 buy_ago_ms,
                 sell_in_ms,
+                mode
               });
               if (response.data.success) setStrategies(response.data.data);
               setIsLoading(false);
@@ -174,7 +209,7 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
             →
           </button>
         </div>
-        <div className="py-1 border-b items-center">
+        <div className="py-2 border-b items-center">
           <div>
             Bought {selectedStock} stock
             <input

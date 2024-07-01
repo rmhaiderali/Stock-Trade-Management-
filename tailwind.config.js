@@ -13,6 +13,7 @@ module.exports = {
         accent: "#F59E0B", // Amber-500
         muted: "#6B7280", // Gray-500
         background: "#223852",
+        yellow: "#f9d949",
       },
     },
   },

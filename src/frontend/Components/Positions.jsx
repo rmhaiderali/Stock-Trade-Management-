@@ -13,7 +13,7 @@ const Positions = ({ positions, onSelectStock }) => {
   return (
     <div className="p-4 rounded-b-lg rounded-r-md">
       <h2 className="text-3xl mb-4 font-bold">Positions</h2>
-      <div className="max-h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-white rounded-l-lg scrollbar-track-[#2257D6] scrollbar-thumb-rounded-full">
+      <div className="max-h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-white rounded-l-lg scrollbar-track-[#2563eb] scrollbar-thumb-rounded-full">
         {positions.map((position, index) => (
           <div
             key={index}

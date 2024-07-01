@@ -3,11 +3,21 @@ import format from "../utils/formatResponse.js";
 import genrateRandomStocks from "../utils/genrateRandomStocks.js";
 
 export default async function suggestUsingAI(req, res) {
-  const { message, stock = "APLL" } = req.body;
+  const {
+    message,
+    stock = "stock",
+    buy_ago,
+    sell_in,
+    buy_ago_ms,
+    sell_in_ms,
+  } = req.body;
 
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   const d = genrateRandomStocks();
+
+  const past_duration = buy_ago ?? d.past_duration;
+  const future_duration = sell_in ?? d.future_duration;
 
   console.log({ message, stock, randomGenratedStocks: d });
 
@@ -20,9 +30,9 @@ export default async function suggestUsingAI(req, res) {
         content: `
         You are providing strategies to help me manage a stock trade I'm in.
         I purchased ${stock} at ${d.buy_price}. The price has ${d.trend} in
-        the past ${d.past_duration} to ${d.current_price}. I'm look for options
+        the past ${past_duration} to ${d.current_price}. I'm look for options
         layer strategies with a goal of the position becoming profitable in the
-        next ${d.future_duration}. My market sentiment is ${d.market_sentiment}.
+        next ${future_duration}. My market sentiment is ${d.market_sentiment}.
         Implied volatility for ${stock} is at ${d.implied_volatility} vs the
         historical volatility average of ${d.historical_volatility_average}.
         `,
@@ -47,7 +57,7 @@ export default async function suggestUsingAI(req, res) {
           ]
         }
 
-        You must genrate 6 to 8 strategies.
+        You must genrate 8 strategies.
         You must provide only one value for each property in each strategy.
         `,
       },

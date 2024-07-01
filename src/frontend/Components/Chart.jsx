@@ -8,7 +8,7 @@ const Header = ({
   shares,
 }) => {
   return (
-    <div className="flex flex-col md:flex-row justify-between p-4 bg-[#2257D6] text-white rounded-lg">
+    <div className="flex flex-col md:flex-row justify-between p-4 bg-[#2563eb] text-white rounded-lg">
       <div className="flex flex-col gap-5">
         <div className="flex items-center">
           <h1 className="text-4xl md:text-5xl font-bold">{stockName}</h1>

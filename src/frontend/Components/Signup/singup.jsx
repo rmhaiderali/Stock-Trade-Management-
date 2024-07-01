@@ -194,7 +194,7 @@ function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
         </div>
 
         {/* Right Side - Text Content */}
-        <div className="md:w-1/2 bg-[#2257D6] dark:bg-gray-700 p-8">
+        <div className="md:w-1/2 bg-[#2563eb] dark:bg-gray-700 p-8">
           <h2 className="text-2xl font-semibold mb-4 text-white">
             AI Stock Trade Recommendations
           </h2>

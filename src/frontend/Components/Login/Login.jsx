@@ -23,7 +23,7 @@ function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
   }, [isSignedIn]);
 
   return (
-    <div className="flex flex-col md:flex-row items-center mt-20 md:justify-center md:gap-10 bg-[#2257D6] text-white">
+    <div className="flex flex-col md:flex-row items-center mt-20 md:justify-center md:gap-10 bg-[#2563eb] text-white">
       <form
         className="max-w-xl mx-auto md:w-1/2 bg-white text-black py-10 px-20 m-10 rounded-xl"
         onSubmit={handleSubmit(onSubmit)}
@@ -70,7 +70,7 @@ function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
         </div>
         <button
           type="submit"
-          className=" bg-[#2257D6] text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className=" bg-[#2563eb] text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Submit
         </button>

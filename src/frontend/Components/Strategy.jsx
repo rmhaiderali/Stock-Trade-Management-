@@ -90,7 +90,7 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
         strategies.map((strategy, index) => (
           <div
             key={index}
-            className={"mb-4 text-white rounded-lg p-2 " + bgColor(index)}
+            className={"mb-4 text-white rounded-lg p-2 bg-blue-600"}
           >
             <div className="flex flex-col md:flex-row md:justify-between md:items-center">
               <h3 className="text-lg">{strategy.name}</h3>

@@ -41,7 +41,7 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
     if (response.data.success) {
       setIsSignedIn(false);
       setUserInfo(null);
-      navigate("/");
+      navigate("/login");
     } else alert(response.data.message || "Something went wrong");
   }
 
@@ -53,10 +53,10 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
           aria-label="Global"
         >
           <div className="flex sm:flex-1">
-            <Link to="/" className="-m-1.5 p-1.5">
+            <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img className="h-8 w-auto" src="/logo.png" alt="" />
-            </Link>
+            </a>
           </div>
           <div className="flex sm:hidden">
             <button

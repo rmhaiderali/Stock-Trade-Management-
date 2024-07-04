@@ -3,8 +3,6 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 import format from "../utils/formatResponse.js";
 
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
-
 export default async function signIn(req, res) {
   const { email, password } = req.body;
 
@@ -24,7 +22,7 @@ export default async function signIn(req, res) {
     return res.status(401).json(format(false, "Invalid email or password"));
   }
 
-  const token = jwt.sign({ id: user._id }, JWT_SECRET_KEY, {
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: "12h",
   });
 
@@ -35,12 +33,11 @@ export default async function signIn(req, res) {
     maxAge: 3600000 * 12, // 12 hours
   });
 
+  const resUser = user.toObject();
+  delete resUser.password;
+  delete resUser.plaidAccessToken;
+
   return res
     .status(200)
-    .json(
-      format(true, "User signed in successfully", {
-        name: user.name,
-        email: user.email,
-      })
-    );
+    .json(format(true, "User signed in successfully", resUser));
 }

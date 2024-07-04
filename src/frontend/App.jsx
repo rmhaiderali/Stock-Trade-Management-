@@ -3,15 +3,14 @@ import Positions from "./Components/Positions";
 import Chart from "./Components/Chart";
 import Strategy from "./Components/Strategy";
 import Market from "./Components/Market";
-// import VideoPlayer from './Components/VideoPlayer';
 import Navbar from "./Components/Header/Navbar";
 import Login from "./Components/Login/Login";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Signup from "./Components/Signup/singup";
 import Profile from "./Components/Profilesection/Profile";
 import VideoPlayer from "./Components/videoplayer";
-import Contact from "./Components/Contact/Contact";
 import ContactForm from "./Components/Contact/Contact";
+import LinkPlaid from "./Components/LinkPlaid";
 import axios from "./custom-axios";
 
 const App = () => {
@@ -24,7 +23,6 @@ const App = () => {
   };
 
   const [headerData, setHeaderData] = useState(initialHeaderData);
-
   const [positions, setPositions] = useState([
     { name: "ARM", price: 175.23, change: 1.06, percent: 0.6 },
     { name: "APPL", price: 175.23, change: 1.06, percent: 0.6 },
@@ -117,94 +115,103 @@ const App = () => {
   const [isSignedIn, setIsSignedIn] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
 
+  const navigate = useNavigate(); // useNavigate hook for navigation
+
   useEffect(() => {
     (async () => {
+      if (["/signup"].includes(location.pathname)) return;
+
       const response = await axios("/api/validateuser");
-      if (response.data.success) {
-        setIsSignedIn(true);
-        setUserInfo(response.data.data);
-      }
+      if (!response.data.success) return navigate("/login");
+      setIsSignedIn(true);
+      setUserInfo(response.data.data);
+      if (!response.data.data?.isPlaidLinked) return navigate("/linkPlaid");
     })();
   }, []);
 
   return (
-    <BrowserRouter>
-      <div>
-        <Navbar
-          setIsSignedIn={setIsSignedIn}
-          userInfo={userInfo}
-          setUserInfo={setUserInfo}
-        />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="min-h-screen">
-                <div className="flex flex-col lg:flex-row">
-                  <div className="lg:w-1/4">
-                    <Positions
-                      positions={positions}
-                      onSelectStock={handleSelectStock}
-                    />
+    <div>
+      <Navbar
+        setIsSignedIn={setIsSignedIn}
+        userInfo={userInfo}
+        setUserInfo={setUserInfo}
+      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="min-h-screen">
+              <div className="flex flex-col lg:flex-row">
+                <div className="lg:w-1/4">
+                  <Positions
+                    positions={positions}
+                    onSelectStock={handleSelectStock}
+                  />
+                </div>
+                <div className="lg:w-1/2 px-4">
+                  <Chart
+                    stockName={selectedStock} // Pass selected stock to Chart component
+                    positionValue={headerData.positionValue}
+                    todayGainLoss={headerData.todayGainLoss}
+                    positionGainLoss={headerData.positionGainLoss}
+                    shares={headerData.shares}
+                  />
+                  <Strategy
+                    strategies={strategies}
+                    setStrategies={setStrategies}
+                    selectedStock={selectedStock}
+                  />
+                </div>
+                <div className="lg:w-1/4 px-4">
+                  <div className="mb-3 rounded-lg">
+                    <VideoPlayer selectedStock={selectedStock} />
                   </div>
-                  <div className="lg:w-1/2 px-4">
-                    <Chart
-                      stockName={selectedStock} // Pass selected stock to Chart component
-                      positionValue={headerData.positionValue}
-                      todayGainLoss={headerData.todayGainLoss}
-                      positionGainLoss={headerData.positionGainLoss}
-                      shares={headerData.shares}
-                    />
-                    <Strategy
-                      strategies={strategies}
-                      setStrategies={setStrategies}
-                      selectedStock={selectedStock}
-                    />
-                  </div>
-                  <div className="lg:w-1/4 px-4">
-                    <div className="mb-3 rounded-lg">
-                      <VideoPlayer selectedStock={selectedStock} />
-                    </div>
-                    <Market markets={markets} />
-                  </div>
+                  <Market markets={markets} />
                 </div>
               </div>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <Login
-                isSignedIn={isSignedIn}
-                setIsSignedIn={setIsSignedIn}
-                setUserInfo={setUserInfo}
-              />
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <Signup
-                isSignedIn={isSignedIn}
-                setIsSignedIn={setIsSignedIn}
-                setUserInfo={setUserInfo}
-              />
-            }
-          />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/contact" element={<ContactForm />} />
-          <Route
-            path="/*"
-            element={
-              <div className="flex-grow flex justify-center items-center">
-                <div>404 - PAGE NOT FOUND</div>
-              </div>
-            }
-          />
-        </Routes>
-      </div>
-    </BrowserRouter>
+            </div>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Login
+              isSignedIn={isSignedIn}
+              setIsSignedIn={setIsSignedIn}
+              setUserInfo={setUserInfo}
+            />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Signup
+              isSignedIn={isSignedIn}
+              setIsSignedIn={setIsSignedIn}
+              setUserInfo={setUserInfo}
+            />
+          }
+        />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/contact" element={<ContactForm />} />
+        <Route path="/linkPlaid" element={<LinkPlaid userInfo={userInfo} />} />
+        <Route
+          path="/*"
+          element={
+            <div className="flex-grow flex justify-center items-center">
+              <div>404 - PAGE NOT FOUND</div>
+            </div>
+          }
+        />
+      </Routes>
+    </div>
   );
 };
 
-export default App;
+const AppWrapper = () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+export default AppWrapper;

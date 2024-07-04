@@ -87,7 +87,7 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
   }
 
   return (
-    <div className="p-4">
+    <div className="pt-4">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
         <div className="flex gap-4 mb-4 md:mb-0 bg-gray-200 md:p-1 md:rounded-lg md:justify-between">
           {modes.map((m) => (

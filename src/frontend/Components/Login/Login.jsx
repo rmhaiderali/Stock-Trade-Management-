@@ -12,7 +12,7 @@ function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
     if (response.data.success) {
       setIsSignedIn(true);
       setUserInfo(response.data.data);
-      navigate("/");
+      navigate(response.data.data?.isPlaidLinked ? "/" : "/linkPlaid");
     } else alert(response.data.message || "Something went wrong");
   };
 

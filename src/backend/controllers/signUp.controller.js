@@ -3,8 +3,6 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 import format from "../utils/formatResponse.js";
 
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
-
 export default async function signUp(req, res) {
   const { name, email, password } = req.body;
 
@@ -24,7 +22,7 @@ export default async function signUp(req, res) {
 
   await newUser.save();
 
-  const token = jwt.sign({ id: newUser._id }, JWT_SECRET_KEY, {
+  const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: "12h",
   });
 
@@ -35,10 +33,9 @@ export default async function signUp(req, res) {
     maxAge: 3600000 * 12, // 12 hours
   });
 
-  return res.json(
-    format(true, "User created successfully", {
-      email: newUser.email,
-      name: newUser.name,
-    })
-  );
+  const resUser = newUser.toObject();
+  delete resUser.password;
+  delete resUser.plaidAccessToken;
+
+  return res.json(format(true, "User created successfully", resUser));
 }

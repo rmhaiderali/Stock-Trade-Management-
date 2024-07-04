@@ -19,7 +19,7 @@ function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
     if (response.data.success) {
       setIsSignedIn(true);
       setUserInfo(response.data.data);
-      navigate("/");
+      navigate("/linkPlaid");
     } else alert(response.data.message || "Something went wrong");
   };
 

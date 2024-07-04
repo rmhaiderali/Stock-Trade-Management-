@@ -1,6 +1,11 @@
 import chalk from "chalk";
 
-const envs = ["JWT_SECRET_KEY", "OPENAI_API_KEY"];
+const envs = [
+  "JWT_SECRET_KEY",
+  "OPENAI_API_KEY",
+  "PLAID_CLIENT_ID",
+  "PLAID_SECRET",
+];
 
 for (const env of envs) {
   if (!process.env.hasOwnProperty(env)) {

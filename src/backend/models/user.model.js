@@ -17,6 +17,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  plaidAccessToken: {
+    type: String,
+  },
+  isPlaidLinked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 delete mongoose.connection.models["User"];

@@ -5,6 +5,7 @@ const envs = [
   "OPENAI_API_KEY",
   "PLAID_CLIENT_ID",
   "PLAID_SECRET",
+  "POLYGON_API_KEY",
 ];
 
 for (const env of envs) {

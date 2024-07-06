@@ -1,5 +1,6 @@
 import { Configuration, PlaidApi, PlaidEnvironments } from "plaid";
 import format from "../utils/formatResponse.js";
+import axios from "axios";
 
 const config = new Configuration({
   basePath: PlaidEnvironments[process.env.PLAID_ENV || "sandbox"],
@@ -66,32 +67,45 @@ export async function getPositions(req, res) {
   const holdingsResponse = await client.investmentsHoldingsGet({
     access_token,
   });
-  const final = {};
+  const positions = {};
 
   holdingsResponse.data.securities
     .filter((security) => security.ticker_symbol?.length < 6)
     .forEach((security) => {
-      const change = getRandomArbitrary(-10, 30)
-      final[security.security_id] = {
+      positions[security.security_id] = {
         name: security.ticker_symbol,
         price: security.close_price,
-        change,
-        percent: Math.abs((change / (security.close_price + change)).toFixed(2)),
       };
     });
 
-  holdingsResponse.data.holdings.forEach((holding) => {
-    if (!final[holding.security_id]) return;
-    final[holding.security_id].shares = holding.quantity;
-    final[holding.security_id].value =
-      holding.institution_price * holding.quantity;
-  });
+  for (const holding of holdingsResponse.data.holdings) {
+    const position = positions[holding.security_id];
+    if (!position) continue;
+
+    position.shares = holding.quantity;
+    position.value = holding.institution_price * holding.quantity;
+    position.change = getRandomArbitrary(-5, 10);
+
+    const { data: resp } = await axios.get(
+      `https://api.polygon.io/v2/aggs/ticker/${position.name}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`,
+      { validateStatus: () => true }
+    );
+
+    console.log(resp);
+
+    if (resp.results?.[0]?.c)
+      position.change = resp.results[0].c - position.price;
+
+    position.percent = Math.abs(
+      ((position.change / position.price) * 100).toFixed(2)
+    );
+  }
 
   res.json(
     format(
       true,
       null,
-      Object.values(final).filter((security) => security.shares)
+      Object.values(positions).filter((security) => security.shares)
     )
   );
 }

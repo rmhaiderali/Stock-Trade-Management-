@@ -1,4 +1,5 @@
 import { Configuration, PlaidApi, PlaidEnvironments } from "plaid";
+import format from "../utils/formatResponse";
 
 const config = new Configuration({
   basePath: PlaidEnvironments[process.env.PLAID_ENV || "sandbox"],
@@ -11,7 +12,7 @@ const config = new Configuration({
   },
 });
 
-const client = new PlaidApi(config);
+export const client = new PlaidApi(config);
 
 export async function createLinkToken(req, res) {
   const tokenResponse = await client.linkTokenCreate({
@@ -53,4 +54,44 @@ export async function investmentHoldings(req, res) {
   });
 
   res.json({ Holdings: holdingsResponse.data });
+}
+
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+export async function getPositions(req, res) {
+  const access_token = req.user.plaidAccessToken;
+
+  const holdingsResponse = await client.investmentsHoldingsGet({
+    access_token,
+  });
+  const final = {};
+
+  holdingsResponse.data.securities
+    .filter((security) => security.ticker_symbol?.length < 6)
+    .forEach((security) => {
+      const change = getRandomArbitrary(-10, 30)
+      final[security.security_id] = {
+        name: security.ticker_symbol,
+        price: security.close_price,
+        change,
+        percent: Math.abs((change / (security.close_price + change)).toFixed(2)),
+      };
+    });
+
+  holdingsResponse.data.holdings.forEach((holding) => {
+    if (!final[holding.security_id]) return;
+    final[holding.security_id].shares = holding.quantity;
+    final[holding.security_id].value =
+      holding.institution_price * holding.quantity;
+  });
+
+  res.json(
+    format(
+      true,
+      null,
+      Object.values(final).filter((security) => security.shares)
+    )
+  );
 }

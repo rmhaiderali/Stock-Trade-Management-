@@ -14,6 +14,7 @@ import {
   exchangePublicToken,
   balance,
   investmentHoldings,
+  getPositions,
 } from "./controllers/plaid.controllers.js";
 import queryUser from "./middlewares/queryUser.middleware.js";
 
@@ -43,6 +44,11 @@ app.get(
   "/api/plaid/investmentHoldings",
   queryUser,
   asyncErrorHandler(investmentHoldings)
+);
+app.get(
+  "/api/plaid/getPositions",
+  queryUser,
+  asyncErrorHandler(getPositions)
 );
 
 app.use((err, req, res, next) => {

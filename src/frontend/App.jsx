@@ -24,18 +24,27 @@ const App = () => {
 
   const [headerData, setHeaderData] = useState(initialHeaderData);
   const [positions, setPositions] = useState([
-    { name: "ARM", price: 175.23, change: 1.06, percent: 0.6 },
-    { name: "APPL", price: 175.23, change: 1.06, percent: 0.6 },
-    { name: "NVDA", price: 175.23, change: -1.06, percent: -0.6 },
-    { name: "MSFT", price: 175.23, change: 1.06, percent: 0.6 },
-    { name: "JPM", price: 175.23, change: 1.06, percent: 0.6 },
-    { name: "GOOG", price: 175.23, change: 1.06, percent: 0.6 },
-    { name: "TSLA", price: 175.23, change: 1.06, percent: 0.6 },
-    { name: "COIN", price: 175.23, change: 1.06, percent: 0.6 },
-    { name: "GOOG", price: 175.23, change: 1.06, percent: 0.6 },
-    { name: "TSLA", price: 175.23, change: 1.06, percent: 0.6 },
-    { name: "COIN", price: 175.23, change: 1.06, percent: 0.6 },
+    // { name: "ARM", price: 175.23, change: 1.06, percent: 0.6 },
+    // { name: "APPL", price: 175.23, change: 1.06, percent: 0.6 },
+    // { name: "NVDA", price: 175.23, change: -1.06, percent: -0.6 },
+    // { name: "MSFT", price: 175.23, change: 1.06, percent: 0.6 },
+    // { name: "JPM", price: 175.23, change: 1.06, percent: 0.6 },
+    // { name: "GOOG", price: 175.23, change: 1.06, percent: 0.6 },
+    // { name: "TSLA", price: 175.23, change: 1.06, percent: 0.6 },
+    // { name: "COIN", price: 175.23, change: 1.06, percent: 0.6 },
+    // { name: "GOOG", price: 175.23, change: 1.06, percent: 0.6 },
+    // { name: "TSLA", price: 175.23, change: 1.06, percent: 0.6 },
+    // { name: "COIN", price: 175.23, change: 1.06, percent: 0.6 },
   ]);
+
+  useEffect(() => {
+    axios.get("/api/plaid/getPositions").then((response) => {
+      setPositions(response.data.data || []);
+      setSelectedStock(response.data.data[0].name);
+    });
+  }, []);
+
+  const [selectedStock, setSelectedStock] = useState("ARM"); // Initial selected stock
 
   const [markets, setMarkets] = useState([
     { name: "S&P", value: 5440.25, change: 10.25, percent: 0.15 },
@@ -92,8 +101,6 @@ const App = () => {
     },
   ]);
 
-  const [selectedStock, setSelectedStock] = useState("ARM"); // Initial selected stock
-
   const handleSelectStock = (stockName) => {
     setSelectedStock(stockName); // Update selected stock
 
@@ -104,10 +111,10 @@ const App = () => {
     if (selectedPosition) {
       setHeaderData({
         stockName: selectedPosition.name,
-        positionValue: selectedPosition.price * headerData.shares, // Assuming position value is price * shares
+        positionValue: selectedPosition.value, // Assuming position value is price * shares
         todayGainLoss: selectedPosition.change * headerData.shares, // Assuming today's gain/loss is change * shares
-        positionGainLoss: selectedPosition.percent * headerData.shares, // Assuming position gain/loss is percent * shares
-        shares: headerData.shares,
+        positionGainLoss: selectedPosition.percent * selectedPosition.shares, // Assuming position gain/loss is percent * shares
+        shares: selectedPosition.shares,
       });
     }
   };

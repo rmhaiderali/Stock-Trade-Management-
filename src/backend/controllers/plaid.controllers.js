@@ -1,5 +1,5 @@
 import { Configuration, PlaidApi, PlaidEnvironments } from "plaid";
-import format from "../utils/formatResponse";
+import format from "../utils/formatResponse.js";
 
 const config = new Configuration({
   basePath: PlaidEnvironments[process.env.PLAID_ENV || "sandbox"],

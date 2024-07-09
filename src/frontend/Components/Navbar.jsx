@@ -60,7 +60,7 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
         <div
           style={{
             display: "flex",
-            width: "320px",
+            width: "315px",
             padding: "20px 0",
             background: "#111827",
             borderRadius: "10px",
@@ -96,10 +96,9 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
             >
               {userInfo?.name}
             </p>
-            <div className="flex">
+            <div className="flex flex-col gap-4">
               <div
-                className="flex text-white border-0 py-2 px-4 focus:outline-none rounded text-md bg-blue-500 hover:bg-blue-600 select-none cursor-pointer"
-                style={{ marginRight: "15px" }}
+                className="text-white border-0 py-2 px-4 focus:outline-none rounded text-md bg-blue-500 hover:bg-blue-600 select-none cursor-pointer text-center"
                 onClick={() => {
                   setIsModalVisible(false);
                   navigate("/profile");
@@ -107,12 +106,23 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
               >
                 Change Profile
               </div>
-              <div
-                className="flex text-white border-0 py-2 px-4 focus:outline-none rounded text-md bg-red-500 hover:bg-red-600 select-none cursor-pointer"
-                variant="danger"
-                onClick={logout}
-              >
-                Logout
+              <div className="flex">
+                <div
+                  className="text-white border-0 py-2 px-4 focus:outline-none rounded text-md bg-green-500 hover:bg-green-600 select-none cursor-pointer"
+                  style={{ marginRight: "15px" }}
+                  onClick={() => {
+                    setIsModalVisible(false);
+                    navigate("/contact");
+                  }}
+                >
+                  Contact Team
+                </div>
+                <div
+                  className="text-white border-0 py-2 px-4 focus:outline-none rounded text-md bg-red-500 hover:bg-red-600 select-none cursor-pointer"
+                  onClick={logout}
+                >
+                  Logout
+                </div>
               </div>
             </div>
           </div>

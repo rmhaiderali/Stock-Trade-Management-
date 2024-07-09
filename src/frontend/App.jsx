@@ -16,10 +16,7 @@ import "./App.css";
 import Loading from "./Components/Loading";
 
 const App = () => {
-  const [positions, setPositions] = useState([]);
-  const [selectedPosition, setSelectedPosition] = useState({});
-
-  const [markets, setMarkets] = useState([
+  const defaultMarkets = [
     { name: "S&P", value: 5440.25, change: 10.25, percent: 0.15 },
     { name: "NASDAQ", value: 17718.3, change: 35.1, percent: 0.2 },
     { name: "DOW", value: 38591.75, change: 25.8, percent: 0.07 },
@@ -29,7 +26,12 @@ const App = () => {
     { name: "10 yr US", value: 4.291, change: -0.04, percent: -0.01 },
     { name: "BTC", value: 65331.25, change: -125.3, percent: -0.21 },
     { name: "VIX", value: 12.75, change: -0.35, percent: -0.25 },
-  ]);
+  ];
+
+  const [positions, setPositions] = useState([]);
+  const [selectedPosition, setSelectedPosition] = useState({});
+
+  const [markets, setMarkets] = useState([]);
 
   const [strategies, setStrategies] = useState([]);
 
@@ -46,9 +48,8 @@ const App = () => {
       ? JSON.parse(localStorage.getItem("positionsDate"))
       : 0;
 
-    // 10 minutes
-    if (Date.now() - localStrategiesDate > 1000 * 60 * 10)
-      localPositions = null;
+    // 2 minutes
+    if (Date.now() - localStrategiesDate > 1000 * 60 * 2) localPositions = null;
 
     if (localPositions) {
       setPositions(localPositions);
@@ -78,6 +79,14 @@ const App = () => {
       setIsSignedIn(true);
       setUserInfo(response.data.data);
       if (!response.data.data?.isPlaidLinked) return navigate("/linkPlaid");
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const response = await axios("/api/yahooFinance");
+      if (!response.data.success) return 1;
+      setMarkets(response.data.data);
     })();
   }, []);
 

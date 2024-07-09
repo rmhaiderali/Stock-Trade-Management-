@@ -59,6 +59,7 @@ export default async function suggestUsingAI(req, res) {
         }
 
         Max Profit: Must be grater then 100 dollars.
+        Max Loss: Must be less than Max Profit.
 
         You must genrate 4 strategies.
         You must provide only one value for each property in each strategy.

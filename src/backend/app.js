@@ -18,6 +18,7 @@ import {
   getPositions,
 } from "./controllers/plaid.controllers.js";
 import queryUser from "./middlewares/queryUser.middleware.js";
+import yahooFinances from "./controllers/yahooFinance.controller.js";
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.get(
   asyncErrorHandler(investmentHoldings)
 );
 app.get("/api/plaid/getPositions", queryUser, asyncErrorHandler(getPositions));
+app.get("/api/yahooFinance", asyncErrorHandler(yahooFinances));
 
 app.use((err, req, res, next) => {
   return res.status(500).json({ success: false, message: err.message });

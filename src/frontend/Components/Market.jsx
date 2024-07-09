@@ -22,7 +22,7 @@ const Market = ({ markets }) => {
             }`}
           >
             <div className="flex flex-col">
-              <span className="text-2xl font-bold">{market.name}</span>
+              <marquee scrollamount="4" className="text-2xl font-bold">{market.name}</marquee>
               <span className="text-xl font-semibold">
                 ${market.value.toFixed(2)}
               </span>

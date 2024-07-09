@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "../../custom-axios";
+import axios from "../custom-axios";
 
 function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
   const { register, handleSubmit, watch, formState } = useForm();

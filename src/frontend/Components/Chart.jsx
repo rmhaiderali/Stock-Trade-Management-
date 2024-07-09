@@ -1,12 +1,22 @@
 import React from "react";
+import Loading from "./Loading";
 
-const Header = ({
-  stockName,
-  positionValue,
-  todayGainLoss,
-  positionGainLoss,
-  shares,
-}) => {
+const Header = ({ selectedPosition }) => {
+  if (!selectedPosition.name)
+    return (
+      <div className="flex flex-col md:flex-row justify-between p-4 bg-[#2563eb] text-white rounded-lg min-h-[196px]">
+        <div className="text-white flex justify-center items-center grow">
+          <Loading />
+        </div>
+      </div>
+    );
+
+  const stockName = selectedPosition.name;
+  const positionValue = selectedPosition.value;
+  const todayGainLoss = selectedPosition.change * selectedPosition.shares;
+  const positionGainLoss = selectedPosition.percent * selectedPosition.shares;
+  const shares = selectedPosition.shares;
+
   return (
     <div className="flex flex-col md:flex-row justify-between p-4 bg-[#2563eb] text-white rounded-lg">
       <div className="flex flex-col gap-5">

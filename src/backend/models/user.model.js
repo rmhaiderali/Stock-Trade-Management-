@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  profilePicture: {
+    type: String,
+    default: "/default_profile.jpg",
+  },
 });
 
 delete mongoose.connection.models["User"];

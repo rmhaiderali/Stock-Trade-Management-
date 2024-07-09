@@ -84,7 +84,7 @@ export async function getPositions(req, res) {
 
     position.shares = holding.quantity;
     position.value = holding.institution_price * holding.quantity;
-    position.change = getRandomArbitrary(-5, 10);
+    position.change = +getRandomArbitrary(-5, 10).toFixed(2);
 
     const { data: resp } = await axios.get(
       `https://api.polygon.io/v2/aggs/ticker/${position.name}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`,
@@ -105,7 +105,9 @@ export async function getPositions(req, res) {
     format(
       true,
       null,
-      Object.values(positions).filter((security) => security.shares)
+      Object.values(positions)
+        .filter((security) => security.shares)
+        .sort((a, b) => b.name.localeCompare(a.name))
     )
   );
 }

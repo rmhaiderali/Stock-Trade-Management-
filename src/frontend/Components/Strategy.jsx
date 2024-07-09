@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../custom-axios";
 import { FaAngleDown, FaArrowUp, FaArrowDown, FaMinus } from "react-icons/fa";
+import Loading from "./Loading";
 
 const Strategy = ({ strategies, setStrategies, selectedStock }) => {
   const [expandedStrategy, setExpandedStrategy] = useState(null);
@@ -119,7 +120,9 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
         </div>
       </div>
       {isLoading ? (
-        <div className="text-center mb-2">Loading</div>
+        <div className="text-blue-600 p-2 pb-4 flex justify-center">
+          <Loading />
+        </div>
       ) : (
         strategies.map((strategy, index) => (
           <div
@@ -199,7 +202,7 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
                 sell_in,
                 buy_ago_ms,
                 sell_in_ms,
-                mode
+                mode,
               });
               if (response.data.success) setStrategies(response.data.data);
               setIsLoading(false);

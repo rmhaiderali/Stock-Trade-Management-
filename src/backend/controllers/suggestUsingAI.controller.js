@@ -48,9 +48,22 @@ export default async function suggestUsingAI(req, res) {
               "name":           {type: string}
               "maxProfit":      {type: number (grater then 100 dollars)}
               "maxLoss":        {type: number (grater then 100 dollars)}
-              "strikePrice":    {type: number (grater then 100 dollars)}
-              "expirationDate": {type: string (DD/MM/YYYY)}
-              "optionPrice":    {type: number}
+              "strikePrice": [
+                {type: number (grater then 100 dollars) (Buy)},
+                {type: number (grater then 100 dollars) (Sell)},
+              ]
+              "expirationDate": [
+                {type: string (DD/MM/YYYY) (Buy)},
+                {type: string (DD/MM/YYYY) (Sell)},
+              ]
+              "optionPrice": [
+                {type: number (Buy)},
+                {type: number (Sell)},
+              ]
+              "optionType": [
+                {type: string (Buy)},
+                {type: string (Sell)},
+              ]
             },
             .
             .

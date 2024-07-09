@@ -89,8 +89,8 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
 
   return (
     <div className="pt-4">
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
-        <div className="flex gap-4 mb-4 md:mb-0 bg-gray-200 md:p-1 md:rounded-lg md:justify-between">
+      <div className="flex flex-col md:flex-row md:justify-between items-center mb-4">
+        <div className="flex gap-4 mb-4 md:mb-0 bg-gray-200 p-1 rounded-lg justify-between">
           {modes.map((m) => (
             <div
               key={m}
@@ -151,34 +151,43 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
               </div>
             </div>
             {expandedStrategy === strategy.name && (
-              <div className="mt-3  p-3 rounded-lg">
-                <div className="flex  gap-2 justify-between align-middle">
-                  <div className="mt-5 pl-3 space-y-6">
-                    <p>
-                      <strong>Strike Price:</strong> {strategy.strikePrice}
-                    </p>
-                    <p>
-                      <strong>Expiration Date:</strong>{" "}
-                      {strategy.expirationDate}
-                    </p>
-                    <p>
-                      <strong>Option Price:</strong> ${strategy.optionPrice}
-                    </p>
-                  </div>
-                  {strategy.image && (
-                    <img
-                      src={strategy.image}
-                      alt={`Image for ${strategy.name}`}
-                      className="w-56 rounded-lg"
-                    />
-                  )}
+              <div className="p-3 rounded-lg">
+                <div className="flex gap-2 justify-between align-middle">
+                  {strategy.optionType.map((type, index) => (
+                    <div className="pl-3 space-y-3">
+                      <p
+                        className={
+                          "px-2 py-1 bg-white rounded-md inline " +
+                          (type?.match?.(/buy/i)
+                            ? "text-green-600"
+                            : type?.match?.(/sell/i)
+                            ? "text-red-600"
+                            : "text-yellow-600")
+                        }
+                      >
+                        <strong>{type || "Unknown"}</strong>
+                      </p>
+                      <p>
+                        <strong>Strike Price:</strong> $
+                        {strategy.strikePrice[index]}
+                      </p>
+                      <p>
+                        <strong>Expiration Date:</strong>{" "}
+                        {strategy.expirationDate[index]}
+                      </p>
+                      <p>
+                        <strong>Option Price:</strong> $
+                        {strategy.optionPrice[index]}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
           </div>
         ))
       )}
-      <div className="bg-blue-600 rounded-lg flex p-3 flex-col justify-between max-h-[330px] text-white ">
+      <div className="bg-blue-600 rounded-lg flex p-3 flex-col justify-between max-h-[330px] text-white mb-4">
         <div className="pb-1 border-b flex flex-row justify-between items-center">
           <div>Redefine Strategies</div>
           <button

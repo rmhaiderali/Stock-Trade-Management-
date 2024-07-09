@@ -25,6 +25,8 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
   async function logout() {
     const response = await axios.post("/api/signout");
     if (response.data.success) {
+      localStorage.removeItem("positions");
+      localStorage.removeItem("positionsDate");
       setIsSignedIn(false);
       setUserInfo(null);
       setIsModalVisible(false);

@@ -127,7 +127,7 @@ const App = () => {
                   <Strategy
                     strategies={strategies}
                     setStrategies={setStrategies}
-                    selectedStock={selectedPosition.name}
+                    selectedPosition={selectedPosition}
                   />
                 </div>
                 <div className="lg:w-1/4 px-4">

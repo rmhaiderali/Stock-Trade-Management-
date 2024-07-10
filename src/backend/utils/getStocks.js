@@ -19,26 +19,13 @@ const sentiments = [
   "pessimistic",
 ];
 
-// Schema
-// {
-//   buy_price: "", // type: number (dollars)
-//   trend: "", // "risen" || "fallen"
-//   past_duration: "", // in days or months (in days if less then 30)
-//   current_price: "", // type: number (dollars)
-//   future_duration: "", // in days or months (in days if less then 30)
-//   market_sentiment: "", // "bullish" || "bearish" || "neutral" || "optimistic" || "pessimistic"
-//   implied_volatility: "", // in percentage (0-100)
-//   historical_volatility_average: "", // in percentage (0-100)
-// }
-
-export default function () {
+export default function ({ current_price }) {
   return {
-    buy_price: getRandomFloat(10, 200),
+    buy_price: current_price + getRandomFloat(-20, 40),
     trend: getRandomElement(trends),
     past_duration: getRandomInt(0, 1)
       ? getRandomInt(1, 30) + " days"
       : getRandomInt(1, 12) + " months",
-    current_price: getRandomFloat(10, 200),
     future_duration: getRandomInt(0, 1)
       ? getRandomInt(1, 30) + " days"
       : getRandomInt(1, 12) + " months",

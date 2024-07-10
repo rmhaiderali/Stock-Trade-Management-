@@ -3,7 +3,7 @@ import axios from "../custom-axios";
 import { FaAngleDown, FaArrowUp, FaArrowDown, FaMinus } from "react-icons/fa";
 import Loading from "./Loading";
 
-const Strategy = ({ strategies, setStrategies, selectedStock }) => {
+const Strategy = ({ strategies, setStrategies, selectedPosition }) => {
   const [expandedStrategy, setExpandedStrategy] = useState(null);
 
   const toggleExpand = (strategyName) => {
@@ -62,19 +62,23 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
       const sell_in = future + getFullScale(futureScale, future > 1);
 
       const response = await axios.post("/api/suggestUsingAI", {
-        stock: selectedStock,
+        stock: selectedPosition.name,
         buy_ago,
         sell_in,
         buy_ago_ms,
         sell_in_ms,
         mode,
+        buy_price: selectedPosition.price,
+        current_price: selectedPosition.price + selectedPosition.change,
       });
       if (response.data.success) setStrategies(response.data.data);
       setIsLoading(false);
     })();
-  }, [selectedStock, mode]);
+  }, [selectedPosition.name, mode]);
 
   function bgColor(index) {
+    return "bg-blue-600";
+
     switch (index % 4) {
       case 0:
         return "bg-pink-600";
@@ -127,33 +131,39 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
         strategies.map((strategy, index) => (
           <div
             key={index}
-            className={"mb-4 text-white rounded-lg p-2 bg-blue-600"}
+            className={"mb-4 text-white rounded-lg p-2 " + bgColor(index)}
           >
             <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-              <h3 className="text-lg">{strategy.name}</h3>
+              <h3 className="text-lg">{strategy.strategyName}</h3>
               <div className="flex gap-3 mt-2 md:mt-0">
                 <div className="flex flex-col justify-center items-center align-middle text-center">
-                  <p>${strategy.maxProfit.toLocaleString()}K</p>
+                  <p>
+                    {typeof strategy.maxProfit === "number" ? "$" : ""}
+                    {strategy.maxProfit}
+                  </p>
                   <p>Max Profit</p>
                 </div>
                 <div className="flex flex-col">
-                  <p>${strategy.maxLoss.toLocaleString()}</p>
+                  <p>
+                    {typeof strategy.maxLoss === "number" ? "$" : ""}
+                    {strategy.maxLoss}
+                  </p>
                   <p>Max Loss</p>
                 </div>
                 <FaAngleDown
                   className={`dropdown-icon text-xl cursor-pointer ${
-                    expandedStrategy === strategy.name
+                    expandedStrategy === strategy.strategyName
                       ? "transform rotate-180"
                       : ""
                   }`}
-                  onClick={() => toggleExpand(strategy.name)}
+                  onClick={() => toggleExpand(strategy.strategyName)}
                 />
               </div>
             </div>
-            {expandedStrategy === strategy.name && (
+            {expandedStrategy === strategy.strategyName && (
               <div className="p-3 rounded-lg">
                 <div className="flex gap-2 justify-between align-middle">
-                  {strategy.optionType.map((type, index) => (
+                  {strategy.buySell.slice(0, 2).map((type, index) => (
                     <div className="pl-3 space-y-3">
                       <p
                         className={
@@ -206,12 +216,14 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
 
               const response = await axios.post("/api/suggestUsingAI", {
                 message: value,
-                stock: selectedStock,
+                stock: selectedPosition.name,
                 buy_ago,
                 sell_in,
                 buy_ago_ms,
                 sell_in_ms,
                 mode,
+                buy_price: selectedPosition.price,
+                current_price: selectedPosition.price + selectedPosition.change,
               });
               if (response.data.success) setStrategies(response.data.data);
               setIsLoading(false);
@@ -223,7 +235,7 @@ const Strategy = ({ strategies, setStrategies, selectedStock }) => {
         </div>
         <div className="py-2 border-b items-center">
           <div>
-            Bought {selectedStock} stock
+            Bought {selectedPosition.name} stock
             <input
               className="outline-none text-black w-12 bg-white rounded-sm ml-2 pl-1"
               type="number"

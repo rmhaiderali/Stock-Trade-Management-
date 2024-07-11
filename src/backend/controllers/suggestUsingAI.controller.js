@@ -182,11 +182,14 @@ export default async function suggestUsingAI(req, res) {
       for (let i = 0; i < strategy.expirationDate.length; i++) {
         const expirationDate = new Date(strategy.expirationDate[i]);
 
-        if (!isDateValid(expirationDate)) continue;
+        if (!isDateValid(expirationDate)) {
+          console.log("using gpt optionPrice strikePrice");
+          continue;
+        }
 
         const polygonExpirationDate = date.format(expirationDate, "YYYY-MM-DD");
 
-        const url = `https://api.polygon.io/v3/snapshot/options/AAPL?expiration_date=${polygonExpirationDate}&limit=5&apiKey=${process.env.POLYGON_API_KEY}`;
+        const url = `https://api.polygon.io/v3/snapshot/options/${stock}?expiration_date=${polygonExpirationDate}&limit=5&apiKey=${process.env.POLYGON_API_KEY}`;
 
         const { data: polygonResponse } = await axios.get(url, {
           validateStatus: () => true,
@@ -194,7 +197,10 @@ export default async function suggestUsingAI(req, res) {
 
         const final = polygonResponse.results.find((e) => e.day.close);
 
-        if (!final) continue;
+        if (!final) {
+          console.log("using gpt optionPrice strikePrice");
+          continue;
+        }
 
         strategy.optionPrice[i] = final.day.close;
         strategy.strikePrice[i] = final.details.strike_price;

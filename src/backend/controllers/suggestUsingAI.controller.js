@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import format from "../utils/formatResponse.js";
 import getStocks from "../utils/getStocks.js";
 import date from "date-and-time";
+import axios from "axios";
 
 export default async function suggestUsingAI(req, res) {
   const {
@@ -10,7 +11,7 @@ export default async function suggestUsingAI(req, res) {
     buy_price,
     buy_ago,
     sell_in,
-    mode = "Max Gain", // if not provided, default to "Max Gain"
+    mode = "Max Gain",
     current_price,
   } = req.body;
 
@@ -19,19 +20,14 @@ export default async function suggestUsingAI(req, res) {
   console.log({
     message,
     stock,
+    mode,
     buy_price,
+    current_price,
     buy_ago,
     sell_in,
-    mode,
-    current_price,
   });
 
-  const s = getStocks({ stock, current_price });
-
-  const past_duration = buy_ago;
-  const future_duration = sell_in;
-
-  console.log({ message, stock, s });
+  const s = getStocks();
 
   const result = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
@@ -42,10 +38,10 @@ export default async function suggestUsingAI(req, res) {
         content: `
         You are a high growth hedge fund manager. You are providing strategies
         to help me manage a stock trade I'm in. I purchased ${stock} at 
-        ${buy_price}. The price has ${s.trend} in the past ${past_duration} to
+        ${buy_price}. The price has ${s.trend} in the past ${buy_ago} to
         ${current_price}. I'm looking for options layer strategies with a goal
-        of the position becoming profitable in the next ${future_duration}. My
-        market sentiment is ${s.market_sentiment}. Implied volatility for ${stock}
+        of the position becoming profitable in the next ${sell_in}. My market 
+        sentiment is ${s.market_sentiment}. Implied volatility for ${stock}
         is at ${s.implied_volatility} vs the historical volatility average of
         ${s.historical_volatility_average}. Provide me suggestions in following
         JSON format:
@@ -177,15 +173,38 @@ export default async function suggestUsingAI(req, res) {
     ],
   });
 
-  console.log(result.choices[0].message.content);
+  const strategies = JSON.parse(result.choices[0].message.content).strategies;
 
-  res
-    .status(200)
-    .json(
-      format(
-        true,
-        null,
-        JSON.parse(result.choices[0].message.content).strategies
-      )
-    );
+  const isDateValid = (date) => !isNaN(date);
+
+  if (stock !== "stock")
+    for (const strategy of strategies) {
+      for (let i = 0; i < strategy.expirationDate.length; i++) {
+        const expirationDate = new Date(strategy.expirationDate[i]);
+
+        if (!isDateValid(expirationDate)) continue;
+
+        const polygonExpirationDate = date.format(expirationDate, "YYYY-MM-DD");
+
+        const url = `https://api.polygon.io/v3/snapshot/options/AAPL?expiration_date=${polygonExpirationDate}&limit=5&apiKey=${process.env.POLYGON_API_KEY}`;
+
+        const { data: polygonResponse } = await axios.get(url, {
+          validateStatus: () => true,
+        });
+
+        const final = polygonResponse.results.find((e) => e.day.close);
+
+        if (!final) continue;
+
+        strategy.optionPrice[i] = final.day.close;
+        strategy.strikePrice[i] = final.details.strike_price;
+
+        console.log("form polygon", {
+          optionPrice: final.day.close,
+          strikePrice: final.details.strike_price,
+        });
+      }
+    }
+
+  res.status(200).json(format(true, null, strategies));
 }

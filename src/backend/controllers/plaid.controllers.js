@@ -2,6 +2,14 @@ import { Configuration, PlaidApi, PlaidEnvironments } from "plaid";
 import format from "../utils/formatResponse.js";
 import axios from "axios";
 
+function toFixed(number, digits = 2) {
+  return +number.toFixed(digits);
+}
+
+function getPercentage(part, total) {
+  return (part / total) * 100;
+}
+
 const config = new Configuration({
   basePath: PlaidEnvironments[process.env.PLAID_ENV || "sandbox"],
   baseOptions: {
@@ -57,10 +65,6 @@ export async function investmentHoldings(req, res) {
   res.json({ Holdings: holdingsResponse.data });
 }
 
-function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
 export async function getPositions(req, res) {
   const access_token = req.user.plaidAccessToken;
 
@@ -74,7 +78,7 @@ export async function getPositions(req, res) {
     .forEach((security) => {
       positions[security.security_id] = {
         name: security.ticker_symbol,
-        price: security.close_price,
+        current_price: security.close_price,
       };
     });
 
@@ -83,21 +87,11 @@ export async function getPositions(req, res) {
     if (!position) continue;
 
     position.shares = holding.quantity;
-    position.value = holding.institution_price * holding.quantity;
-    position.change = +getRandomArbitrary(-5, 10).toFixed(2);
-
-    const { data: resp } = await axios.get(
-      `https://api.polygon.io/v2/aggs/ticker/${position.name}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`,
-      { validateStatus: () => true }
-    );
-
-    console.log(resp);
-
-    if (resp.results?.[0]?.c)
-      position.change = resp.results[0].c - position.price;
-
-    position.percent = Math.abs(
-      ((position.change / position.price) * 100).toFixed(2)
+    position.value = holding.institution_value;
+    position.buy_price = holding.cost_basis;
+    position.change = toFixed(position.current_price - position.buy_price);
+    position.change_percent = toFixed(
+      getPercentage(position.change, position.buy_price)
     );
   }
 

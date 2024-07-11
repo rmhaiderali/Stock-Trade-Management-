@@ -19,16 +19,9 @@ const sentiments = [
   "pessimistic",
 ];
 
-export default function ({ current_price }) {
+export default function () {
   return {
-    buy_price: current_price + getRandomFloat(-20, 40),
     trend: getRandomElement(trends),
-    past_duration: getRandomInt(0, 1)
-      ? getRandomInt(1, 30) + " days"
-      : getRandomInt(1, 12) + " months",
-    future_duration: getRandomInt(0, 1)
-      ? getRandomInt(1, 30) + " days"
-      : getRandomInt(1, 12) + " months",
     market_sentiment: getRandomElement(sentiments),
     implied_volatility: getRandomFloat(0, 100) + "%",
     historical_volatility_average: getRandomFloat(0, 100) + "%",

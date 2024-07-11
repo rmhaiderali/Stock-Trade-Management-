@@ -14,7 +14,7 @@ const Header = ({ selectedPosition }) => {
   const stockName = selectedPosition.name;
   const positionValue = selectedPosition.value;
   const todayGainLoss = selectedPosition.change * selectedPosition.shares;
-  const positionGainLoss = selectedPosition.percent * selectedPosition.shares;
+  const positionGainLoss = selectedPosition.change_percent * selectedPosition.shares;
   const shares = selectedPosition.shares;
 
   return (

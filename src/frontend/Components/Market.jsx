@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 
 const Market = ({ markets }) => {
-  const [selectedIndex, setSelectedIndex] = useState(null);
-
-  const handleClick = (index) => {
-    setSelectedIndex(index);
-  };
-
   return (
     <div className="p-4 rounded-lg ">
       <h2 className="text-3xl mb-4 font-bold">Markets</h2>
@@ -14,15 +8,12 @@ const Market = ({ markets }) => {
         {markets.map((market, index) => (
           <div
             key={index}
-            onClick={() => handleClick(index)}
-            className={`flex justify-between mb-2 border-b-2 pb-3 cursor-pointer pl-2 ${
-              selectedIndex === index
-                ? "border-l-4 border-white rounded-b-md"
-                : ""
-            }`}
+            className="flex justify-between mb-2 border-b-2 pb-3 cursor-pointer pl-2 border-l-4 border-white rounded-b-md"
           >
             <div className="flex flex-col">
-              <marquee scrollamount="4" className="text-2xl font-bold">{market.name}</marquee>
+              <marquee scrollamount="4" className="text-2xl font-bold">
+                {market.name}
+              </marquee>
               <span className="text-xl font-semibold">
                 ${market.value.toFixed(2)}
               </span>

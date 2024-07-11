@@ -68,8 +68,8 @@ const Strategy = ({ strategies, setStrategies, selectedPosition }) => {
         buy_ago_ms,
         sell_in_ms,
         mode,
-        buy_price: selectedPosition.price,
-        current_price: selectedPosition.price + selectedPosition.change,
+        buy_price: selectedPosition.buy_price,
+        current_price: selectedPosition.current_price,
       });
       if (response.data.success) setStrategies(response.data.data);
       setIsLoading(false);
@@ -222,8 +222,8 @@ const Strategy = ({ strategies, setStrategies, selectedPosition }) => {
                 buy_ago_ms,
                 sell_in_ms,
                 mode,
-                buy_price: selectedPosition.price,
-                current_price: selectedPosition.price + selectedPosition.change,
+                buy_price: selectedPosition.buy_price,
+                current_price: selectedPosition.current_price,
               });
               if (response.data.success) setStrategies(response.data.data);
               setIsLoading(false);

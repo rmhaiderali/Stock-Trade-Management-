@@ -18,7 +18,6 @@ function Profile({ userInfo, setUserInfo }) {
   );
 
   const onSubmit = async (data) => {
-    console.log(data);
     const formData = new FormData();
 
     formData.append("name", data.name);

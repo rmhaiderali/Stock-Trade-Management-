@@ -30,39 +30,16 @@ const App = () => {
 
   const [positions, setPositions] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState({});
-
   const [markets, setMarkets] = useState([]);
-
   const [strategies, setStrategies] = useState([]);
 
-  const handleSelectStock = (name) => {
-    setSelectedPosition(positions.find((position) => position.name === name));
-  };
-
   useEffect(() => {
-    let localPositions = localStorage.getItem("positions")
-      ? JSON.parse(localStorage.getItem("positions"))
-      : null;
-
-    const localStrategiesDate = localStorage.getItem("positionsDate")
-      ? JSON.parse(localStorage.getItem("positionsDate"))
-      : 0;
-
-    // 2 minutes
-    if (Date.now() - localStrategiesDate > 1000 * 60 * 2) localPositions = null;
-
-    if (localPositions) {
-      setPositions(localPositions);
-      setSelectedPosition(localPositions[0]);
-    } else
-      axios.get("/api/plaid/getPositions").then((response) => {
-        if (response.data.data) {
-          setPositions(response.data.data);
-          setSelectedPosition(response.data.data[0]);
-          localStorage.setItem("positions", JSON.stringify(response.data.data));
-          localStorage.setItem("positionsDate", Date.now());
-        }
-      });
+    axios.get("/api/plaid/getPositions").then((response) => {
+      if (response.data.data) {
+        setPositions(response.data.data);
+        setSelectedPosition(response.data.data[0]);
+      }
+    });
   }, []);
 
   const [isSignedIn, setIsSignedIn] = useState(null);
@@ -85,8 +62,7 @@ const App = () => {
   useEffect(() => {
     (async () => {
       const response = await axios("/api/yahooFinance");
-      if (!response.data.success) return 1;
-      setMarkets(response.data.data);
+      if (response.data.success) setMarkets(response.data.data);
     })();
   }, []);
 
@@ -104,17 +80,15 @@ const App = () => {
             <div className="min-h-screen">
               <div className="flex flex-col lg:flex-row">
                 <div
-                  className={
-                    "lg:w-1/4" +
-                    (positions.length
-                      ? ""
-                      : " flex justify-center items-center")
-                  }
+                  className={`lg:w-1/4 ${
+                    positions.length ? "" : "flex justify-center items-center"
+                  }`}
                 >
                   {positions.length ? (
                     <Positions
                       positions={positions}
-                      onSelectStock={handleSelectStock}
+                      selectedPosition={selectedPosition}
+                      setSelectedPosition={setSelectedPosition}
                     />
                   ) : (
                     <div className="translate-y-[-200px] text-blue-600">
@@ -130,11 +104,18 @@ const App = () => {
                     selectedPosition={selectedPosition}
                   />
                 </div>
-                <div className="lg:w-1/4 px-4">
+                <div className="lg:w-1/4 px-4 flex flex-col">
                   <div className="mb-3 rounded-lg">
                     <VideoPlayer selectedStock={selectedPosition.name} />
                   </div>
-                  <Market markets={markets} />
+
+                  {markets.length ? (
+                    <Market markets={markets} />
+                  ) : (
+                    <div className="text-blue-600 grow flex justify-center items-center">
+                      <Loading />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

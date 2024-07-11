@@ -189,7 +189,7 @@ export default async function suggestUsingAI(req, res) {
 
         const polygonExpirationDate = date.format(expirationDate, "YYYY-MM-DD");
 
-        const url = `https://api.polygon.io/v3/snapshot/options/${stock}?expiration_date=${polygonExpirationDate}&limit=5&apiKey=${process.env.POLYGON_API_KEY}`;
+        const url = `https://api.polygon.io/v3/snapshot/options/${stock}?expiration_date=${polygonExpirationDate}&limit=200&apiKey=${process.env.POLYGON_API_KEY}`;
 
         const { data: polygonResponse } = await axios.get(url, {
           validateStatus: () => true,

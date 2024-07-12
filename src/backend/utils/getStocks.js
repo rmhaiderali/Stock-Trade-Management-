@@ -6,7 +6,7 @@ function getRandomFloat(min, max) {
   return (Math.random() * (max - min) + min).toFixed(2);
 }
 
-function getRandomElement(arr) {
+export function getRandomElement(arr) {
   return arr[getRandomInt(0, arr.length - 1)];
 }
 

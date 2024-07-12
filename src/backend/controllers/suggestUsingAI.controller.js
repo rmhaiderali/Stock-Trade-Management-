@@ -1,8 +1,9 @@
 import OpenAI from "openai";
 import format from "../utils/formatResponse.js";
-import getStocks from "../utils/getStocks.js";
+import getStocks, { getRandomElement } from "../utils/getStocks.js";
 import date from "date-and-time";
 import axios from "axios";
+import pc from "picocolors";
 
 export default async function suggestUsingAI(req, res) {
   const {
@@ -182,32 +183,68 @@ export default async function suggestUsingAI(req, res) {
       for (let i = 0; i < strategy.expirationDate.length; i++) {
         const expirationDate = new Date(strategy.expirationDate[i]);
 
+        console.log();
+
         if (!isDateValid(expirationDate)) {
-          console.log("using gpt optionPrice strikePrice");
+          console.log(
+            pc.yellow(
+              `using gpt optionPrice strikePrice because date provided by GPT (${strategy.expirationDate[i]}) is invalid `
+            )
+          );
+          if (!strategy.pricesFrom) strategy.pricesFrom = [];
+          strategy.pricesFrom[i] = "GPT";
           continue;
         }
 
-        const polygonExpirationDate = date.format(expirationDate, "YYYY-MM-DD");
+        const polygonExpirationDateGt = date.format(
+          date.addDays(expirationDate, -15),
+          "YYYY-MM-DD"
+        );
+        const polygonExpirationDateLt = date.format(
+          date.addDays(expirationDate, 15),
+          "YYYY-MM-DD"
+        );
 
-        const url = `https://api.polygon.io/v3/snapshot/options/${stock}?expiration_date=${polygonExpirationDate}&limit=200&apiKey=${process.env.POLYGON_API_KEY}`;
+        const url = `https://api.polygon.io/v3/snapshot/options/${stock}?expiration_date.gt=${polygonExpirationDateGt}&expiration_date.lt=${polygonExpirationDateLt}&limit=200&apiKey=${process.env.POLYGON_API_KEY}`;
+
+        console.log(url);
 
         const { data: polygonResponse } = await axios.get(url, {
           validateStatus: () => true,
         });
 
-        const final = polygonResponse.results.find((e) => e.day.close);
+        const filteredPolygonResponse = polygonResponse.results.filter(
+          (e) =>
+            e.day.close &&
+            strategy.positionType[i]
+              .toLowerCase()
+              .includes(e.details.contract_type)
+        );
+
+        const final = getRandomElement(filteredPolygonResponse);
 
         if (!final) {
-          console.log("using gpt optionPrice strikePrice");
+          console.log(
+            pc.yellow(
+              `using gpt optionPrice strikePrice because no data found in polygon where day.close have value and details.contract_type is ${strategy.positionType[i]}`
+            )
+          );
+          if (!strategy.pricesFrom) strategy.pricesFrom = [];
+          strategy.pricesFrom[i] = "GPT";
           continue;
         }
 
         strategy.optionPrice[i] = final.day.close;
         strategy.strikePrice[i] = final.details.strike_price;
+        strategy.expirationDate[i] = final.details.expiration_date;
 
-        console.log("form polygon", {
+        if (!strategy.pricesFrom) strategy.pricesFrom = [];
+        strategy.pricesFrom[i] = "Polygon";
+
+        console.log(pc.green("form polygon"), {
           optionPrice: final.day.close,
           strikePrice: final.details.strike_price,
+          expirationDate: final.details.expiration_date,
         });
       }
     }

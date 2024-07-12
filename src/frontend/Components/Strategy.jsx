@@ -55,6 +55,8 @@ const Strategy = ({ strategies, setStrategies, selectedPosition }) => {
     (async () => {
       setIsLoading(true);
 
+      if (!selectedPosition.name) return;
+
       const buy_ago_ms = past * getMSbyScale(pastScale);
       const sell_in_ms = future * getMSbyScale(futureScale);
 
@@ -178,16 +180,24 @@ const Strategy = ({ strategies, setStrategies, selectedPosition }) => {
                         <strong>{type || "Unknown"}</strong>
                       </p>
                       <p>
-                        <strong>Strike Price:</strong> $
-                        {strategy.strikePrice[index]}
+                        <strong>Position Type: </strong>
+                        {strategy.positionType[index]}
                       </p>
                       <p>
-                        <strong>Expiration Date:</strong>{" "}
+                        <strong>Strike Price: </strong>
+                        ${strategy.strikePrice[index]}
+                      </p>
+                      <p>
+                        <strong>Expiration Date: </strong>
                         {strategy.expirationDate[index]}
                       </p>
                       <p>
-                        <strong>Option Price:</strong> $
-                        {strategy.optionPrice[index]}
+                        <strong>Option Price: </strong>
+                        ${strategy.optionPrice[index]}
+                      </p>
+                      <p>
+                        <strong>Prices Source: </strong>
+                        {strategy.pricesFrom[index]}
                       </p>
                     </div>
                   ))}

@@ -28,5 +28,7 @@ export default async function fetchYahooFinanceData(req, res) {
     ).toFixed(2),
   }));
 
+  res.set("Cache-Control", "public, max-age=300");
+
   res.json(format(true, null, marketData));
 }

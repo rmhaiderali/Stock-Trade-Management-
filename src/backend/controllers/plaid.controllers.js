@@ -1,6 +1,5 @@
 import { Configuration, PlaidApi, PlaidEnvironments } from "plaid";
 import format from "../utils/formatResponse.js";
-import axios from "axios";
 
 function toFixed(number, digits = 2) {
   return +number.toFixed(digits);
@@ -47,12 +46,6 @@ export async function exchangePublicToken(req, res) {
   await req.user.save();
 
   res.json(true);
-}
-
-export async function balance(req, res) {
-  const access_token = req.user.plaidAccessToken;
-  const balanceResponse = await client.accountsBalanceGet({ access_token });
-  res.json({ Balance: balanceResponse.data });
 }
 
 export async function investmentHoldings(req, res) {

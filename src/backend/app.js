@@ -13,7 +13,6 @@ import suggestUsingAI from "./controllers/suggestUsingAI.controller.js";
 import {
   createLinkToken,
   exchangePublicToken,
-  balance,
   investmentHoldings,
   getPositions,
 } from "./controllers/plaid.controllers.js";
@@ -49,7 +48,6 @@ app.post(
   queryUser,
   asyncErrorHandler(exchangePublicToken)
 );
-app.get("/api/plaid/balance", queryUser, asyncErrorHandler(balance));
 app.get(
   "/api/plaid/investmentHoldings",
   queryUser,

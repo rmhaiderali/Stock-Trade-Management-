@@ -1,7 +1,7 @@
 import yahooFinance from "yahoo-finance2";
 import format from "../utils/formatResponse.js";
 
-export default async function fetchYahooFinanceData(req, res) {
+export default async function yahooFinanceMarketData(req, res) {
   const symbols = [
     "^GSPC", // S&P 500
     "^IXIC", // NASDAQ Composite

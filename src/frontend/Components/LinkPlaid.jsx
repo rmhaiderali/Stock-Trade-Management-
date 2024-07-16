@@ -2,25 +2,20 @@ import React, { useState, useEffect, useCallback } from "react";
 import { usePlaidLink } from "react-plaid-link";
 import { useNavigate } from "react-router-dom";
 
-export default function ({ userInfo }) {
+export default function () {
   const navigate = useNavigate();
 
   const [token, setToken] = useState(null);
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   const onSuccess = useCallback(async (publicToken) => {
     setLoading(true);
     await fetch("/api/plaid/exchangePublicToken", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ public_token: publicToken }),
     });
 
     navigate("/");
-    // await getBalance();
   }, []);
 
   // Creates a Link token
@@ -37,21 +32,9 @@ export default function ({ userInfo }) {
     }
   }, [setToken]);
 
-  // Fetch balance data
-  const getBalance = React.useCallback(async () => {
-    setLoading(true);
-    const response = await fetch("/api/plaid/investmentHoldings", {});
-    const data = await response.json();
-    setData(data);
-    setLoading(false);
-  }, [setData, setLoading]);
-
   let isOauth = false;
 
-  const config = {
-    token,
-    onSuccess,
-  };
+  const config = { token, onSuccess };
 
   // For OAuth, configure the received redirect URI
   if (window.location.href.includes("?oauth_state_id=")) {
@@ -81,17 +64,6 @@ export default function ({ userInfo }) {
       >
         Link account with Plaid
       </button>
-      {/* <button onClick={() => getBalance()}>
-        Manually get investmentHoldings
-      </button>
-
-      {!loading &&
-        data != null &&
-        Object.entries(data).map((entry, i) => (
-          <pre key={i}>
-            <code>{JSON.stringify(entry[1], null, 2)}</code>
-          </pre>
-        ))} */}
     </div>
   );
 }

@@ -1,6 +1,6 @@
-### Documentation for `changeName` Endpoint
+### Documentation for `changeProfile` Endpoint
 
-#### Endpoint: `POST /api/changeName`
+#### Endpoint: `POST /api/changeProfile`
 
 #### Description:
 This endpoint allows users to update their profile information, including their name, email, and profile picture.

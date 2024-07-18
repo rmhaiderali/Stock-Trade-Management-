@@ -46,5 +46,3 @@ This endpoint uses authentication middleware that populates `req.user` with the 
 
 ### Dependencies:
 - `formatResponse`: Custom utility for formatting the API response.
-
-This documentation ensures that users and developers understand how to use the `validateUser` endpoint to verify authentication status and retrieve profile information securely.

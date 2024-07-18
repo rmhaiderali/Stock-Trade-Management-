@@ -25,5 +25,3 @@ A JSON object indicating the success of the sign-out operation.
 
 ### Dependencies:
 - `formatResponse`: Custom utility for formatting the API response.
-
-This simple yet effective endpoint ensures that users can securely log out by removing the authentication token from their browser.

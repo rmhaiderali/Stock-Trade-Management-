@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../libraries/custom-axios";
+import axios from "./Libraries/custom-axios";
 
 export default function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
   const navigate = useNavigate();

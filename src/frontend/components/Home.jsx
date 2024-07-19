@@ -5,10 +5,10 @@ import Chart from "./Chart";
 import Strategy from "./Strategy";
 import Market from "./Market";
 import Loading from "./Loading";
-import axios from "../libraries/custom-axios";
+import axios from "./Libraries/custom-axios";
 import TradingViewWidget, {
   Themes,
-} from "../libraries/react-tradingview-widget";
+} from "./Libraries/react-tradingview-widget";
 
 export default function Home({ isSignedIn, isValidatingUser }) {
   const navigate = useNavigate();

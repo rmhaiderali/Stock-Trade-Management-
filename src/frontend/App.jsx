@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Profile from "./components/Profile";
-import ContactForm from "./components/Contact";
-import LinkPlaid from "./components/LinkPlaid";
-import Home from "./components/Home";
-import axios from "./libraries/custom-axios";
+import Navbar from "./Components/Navbar";
+import Login from "./Components/Login";
+import Signup from "./Components/Signup";
+import Profile from "./Components/Profile";
+import ContactForm from "./Components/Contact";
+import LinkPlaid from "./Components/LinkPlaid";
+import Home from "./Components/Home";
+import axios from "./Components/Libraries/custom-axios";
 
 const App = () => {
   const navigate = useNavigate();

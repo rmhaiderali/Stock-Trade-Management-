@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "../libraries/custom-axios";
+import axios from "./Libraries/custom-axios";
 import { FaAngleDown, FaArrowUp, FaArrowDown, FaMinus } from "react-icons/fa";
 import Loading from "./Loading";
 

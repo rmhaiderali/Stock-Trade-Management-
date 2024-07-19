@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Loading from "./Loading";
 import { useForm } from "react-hook-form";
-import axios from "../libraries/custom-axios";
+import axios from "./Libraries/custom-axios";
 
 export default function Profile({ userInfo, setUserInfo }) {
   if (!userInfo)

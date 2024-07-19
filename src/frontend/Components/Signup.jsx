@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "../libraries/custom-axios";
+import axios from "./Libraries/custom-axios";
 
 export default function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
   const navigate = useNavigate();

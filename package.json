@@ -1,5 +1,5 @@
 {
-  "name": "marvinauto",
+  "name": "stock-trade-management",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +7,10 @@
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "node src/backend/index.js"
+    "start": "node src/backend/index.js",
+    "pm2:s": "pm2 start npm -n stock-trade-management -- start",
+    "pm2:l": "pm2 logs stock-trade-management --lines 500",
+    "pm2:d": "pm2 delete stock-trade-management"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",

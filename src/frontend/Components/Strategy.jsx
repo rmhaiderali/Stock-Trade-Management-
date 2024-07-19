@@ -3,7 +3,12 @@ import axios from "../custom-axios";
 import { FaAngleDown, FaArrowUp, FaArrowDown, FaMinus } from "react-icons/fa";
 import Loading from "./Loading";
 
-const Strategy = ({ strategies, setStrategies, selectedPosition }) => {
+const Strategy = ({
+  strategies,
+  setStrategies,
+  selectedPosition,
+  isSignedIn,
+}) => {
   const [expandedStrategy, setExpandedStrategy] = useState(null);
 
   const toggleExpand = (strategyName) => {
@@ -53,6 +58,8 @@ const Strategy = ({ strategies, setStrategies, selectedPosition }) => {
 
   useEffect(() => {
     (async () => {
+      if (!isSignedIn) return;
+
       setIsLoading(true);
 
       if (!selectedPosition.name) return;
@@ -76,7 +83,7 @@ const Strategy = ({ strategies, setStrategies, selectedPosition }) => {
       if (response.data.success) setStrategies(response.data.data);
       setIsLoading(false);
     })();
-  }, [selectedPosition.name, mode]);
+  }, [selectedPosition.name, mode, isSignedIn]);
 
   function bgColor(index) {
     return "bg-blue-600";
@@ -184,16 +191,16 @@ const Strategy = ({ strategies, setStrategies, selectedPosition }) => {
                         {strategy.positionType[index]}
                       </p>
                       <p>
-                        <strong>Strike Price: </strong>
-                        ${strategy.strikePrice[index]}
+                        <strong>Strike Price: </strong>$
+                        {strategy.strikePrice[index]}
                       </p>
                       <p>
                         <strong>Expiration Date: </strong>
                         {strategy.expirationDate[index]}
                       </p>
                       <p>
-                        <strong>Option Price: </strong>
-                        ${strategy.optionPrice[index]}
+                        <strong>Option Price: </strong>$
+                        {strategy.optionPrice[index]}
                       </p>
                       <p>
                         <strong>Prices Source: </strong>

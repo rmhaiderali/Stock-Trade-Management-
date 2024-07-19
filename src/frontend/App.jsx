@@ -33,22 +33,25 @@ const App = () => {
   const [markets, setMarkets] = useState([]);
   const [strategies, setStrategies] = useState([]);
 
+  const [isSignedIn, setIsSignedIn] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+
   useEffect(() => {
+    if (!isSignedIn) return;
+
     axios.get("/api/plaid/getPositions").then((response) => {
       if (response.data.data) {
         setPositions(response.data.data);
         setSelectedPosition(response.data.data[0]);
       }
     });
-  }, []);
-
-  const [isSignedIn, setIsSignedIn] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
+  }, [isSignedIn]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
+      if (!isSignedIn) return;
       if (["/signup"].includes(location.pathname)) return;
 
       const response = await axios("/api/validateUser");
@@ -57,14 +60,15 @@ const App = () => {
       setUserInfo(response.data.data);
       if (!response.data.data?.isPlaidLinked) return navigate("/linkPlaid");
     })();
-  }, []);
+  }, [isSignedIn]);
 
   useEffect(() => {
     (async () => {
+      if (!isSignedIn) return;
       const response = await axios("/api/yahooFinance");
       if (response.data.success) setMarkets(response.data.data);
     })();
-  }, []);
+  }, [isSignedIn]);
 
   return (
     <div>
@@ -99,6 +103,7 @@ const App = () => {
                 <div className="lg:w-1/2 px-4">
                   <Chart selectedPosition={selectedPosition} />
                   <Strategy
+                    isSignedIn={isSignedIn}
                     strategies={strategies}
                     setStrategies={setStrategies}
                     selectedPosition={selectedPosition}

@@ -68,7 +68,7 @@ export default function Home({ isSignedIn, isValidatingUser }) {
         ) : (
           <>
             <div
-              className={`lg:w-1/4 ${
+              className={`lg:w-[23%] ${
                 positions.length
                   ? ""
                   : "lg:h-[--height] flex justify-center items-center mb-4"
@@ -98,7 +98,7 @@ export default function Home({ isSignedIn, isValidatingUser }) {
             </div>
           </>
         )}
-        <div className="lg:w-1/4 px-4 flex flex-col">
+        <div className="lg:w-[27%] px-4 flex flex-col">
           <div className="mb-3 rounded-lg">
             <div className="h-[400px] rounded-2xl overflow-hidden">
               <TradingViewWidget

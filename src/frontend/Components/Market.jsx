@@ -6,7 +6,7 @@ export default function Market({ markets }) {
         {markets.map((market, index) => (
           <div
             key={index}
-            className="flex justify-between mb-2 border-b-2 pb-3 cursor-pointer pl-2 border-l-4 border-white rounded-b-md"
+            className={`flex justify-between border-b-2 cursor-pointer border-black py-2 ${index === 0 ? "border-t-2" : ""}`}
           >
             <div className="flex flex-col">
               <marquee scrollamount="4" className="text-2xl font-bold">
@@ -17,7 +17,7 @@ export default function Market({ markets }) {
               </span>
             </div>
             <span
-              className={`ml-4 font-bold text-xl w-24 mr-5 ${
+              className={`ml-4 font-bold text-xl mr-5 ${
                 market.change > 0
                   ? "text-green-500  rounded-2xl"
                   : "text-red-500 rounded-2xl"

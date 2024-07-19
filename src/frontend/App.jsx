@@ -51,7 +51,6 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
-      if (!isSignedIn) return;
       if (["/signup"].includes(location.pathname)) return;
 
       const response = await axios("/api/validateUser");
@@ -60,7 +59,7 @@ const App = () => {
       setUserInfo(response.data.data);
       if (!response.data.data?.isPlaidLinked) return navigate("/linkPlaid");
     })();
-  }, [isSignedIn]);
+  }, []);
 
   useEffect(() => {
     (async () => {

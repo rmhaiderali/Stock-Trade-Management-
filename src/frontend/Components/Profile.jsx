@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Loading from "./Loading";
 import { useForm } from "react-hook-form";
-import axios from "../custom-axios";
+import axios from "../libraries/custom-axios";
 
-function Profile({ userInfo, setUserInfo }) {
+export default function Profile({ userInfo, setUserInfo }) {
   if (!userInfo)
     return (
       <div className="flex grow justify-center items-center">
@@ -136,5 +136,3 @@ function Profile({ userInfo, setUserInfo }) {
     </section>
   );
 }
-
-export default Profile;

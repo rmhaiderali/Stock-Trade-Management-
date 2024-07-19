@@ -88,8 +88,6 @@ export async function getPositions(req, res) {
     );
   }
 
-  res.set("Cache-Control", "public, max-age=300");
-
   res.json(
     format(
       true,

@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "../custom-axios";
+import axios from "../libraries/custom-axios";
 
-function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
+export default function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
+  const navigate = useNavigate();
+
   const { register, handleSubmit, watch, formState } = useForm();
   // console.log(watch("email"));
 
@@ -15,8 +17,6 @@ function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
       navigate(response.data.data?.isPlaidLinked ? "/" : "/linkPlaid");
     } else alert(response.data.message || "Something went wrong");
   };
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (isSignedIn) navigate("/");
@@ -82,5 +82,3 @@ function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
     </div>
   );
 }
-
-export default Login;

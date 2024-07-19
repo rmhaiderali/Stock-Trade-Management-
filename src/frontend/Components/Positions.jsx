@@ -1,9 +1,8 @@
-// Positions.jsx
-
-import React, { useState } from "react";
-
-const Positions = ({ positions, selectedPosition, setSelectedPosition }) => {
-
+export default function Positions({
+  positions,
+  selectedPosition,
+  setSelectedPosition,
+}) {
   return (
     <div className="p-4 rounded-b-lg rounded-r-md">
       <h2 className="text-3xl mb-4 font-bold">Positions</h2>
@@ -13,7 +12,9 @@ const Positions = ({ positions, selectedPosition, setSelectedPosition }) => {
             key={index}
             onClick={() => setSelectedPosition(position)}
             className={`flex justify-between border-b-2 cursor-pointer border-black py-2 ${
-              selectedPosition.name === position.name ? "bg-[#2563eb] text-white" : ""
+              selectedPosition.name === position.name
+                ? "bg-[#2563eb] text-white"
+                : ""
             } ${index === 0 ? "border-t-2" : ""}`}
           >
             <div className="flex flex-col pl-2">
@@ -44,6 +45,4 @@ const Positions = ({ positions, selectedPosition, setSelectedPosition }) => {
       </div>
     </div>
   );
-};
-
-export default Positions;
+}

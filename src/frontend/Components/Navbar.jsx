@@ -1,24 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../custom-axios";
+import axios from "../libraries/custom-axios";
 
-function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
+export default function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
   const navigate = useNavigate();
-
-  const [isProductMenuOpen, setIsProductMenuOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const toggleProductMenu = () => {
-    setIsProductMenuOpen(!isProductMenuOpen);
-  };
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -155,5 +140,3 @@ function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
     </div>
   );
 }
-
-export default Navbar;

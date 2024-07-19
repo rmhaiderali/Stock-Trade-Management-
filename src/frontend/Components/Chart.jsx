@@ -1,7 +1,6 @@
-import React from "react";
 import Loading from "./Loading";
 
-const Header = ({ selectedPosition }) => {
+export default function Chart({ selectedPosition }) {
   if (!selectedPosition.name)
     return (
       <div className="flex flex-col md:flex-row justify-between p-4 bg-[#2563eb] text-white rounded-lg min-h-[196px]">
@@ -14,7 +13,8 @@ const Header = ({ selectedPosition }) => {
   const stockName = selectedPosition.name;
   const positionValue = selectedPosition.value;
   const todayGainLoss = selectedPosition.change * selectedPosition.shares;
-  const positionGainLoss = selectedPosition.change_percent * selectedPosition.shares;
+  const positionGainLoss =
+    selectedPosition.change_percent * selectedPosition.shares;
   const shares = selectedPosition.shares;
 
   return (
@@ -57,6 +57,4 @@ const Header = ({ selectedPosition }) => {
       </div>
     </div>
   );
-};
-
-export default Header;
+}

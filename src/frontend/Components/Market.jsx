@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-
-const Market = ({ markets }) => {
+export default function Market({ markets }) {
   return (
     <div className="p-4 rounded-lg ">
       <h2 className="text-3xl mb-4 font-bold">Markets</h2>
@@ -42,6 +40,4 @@ const Market = ({ markets }) => {
       </div>
     </div>
   );
-};
-
-export default Market;
+}

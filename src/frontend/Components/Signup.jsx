@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "../custom-axios";
+import axios from "../libraries/custom-axios";
 
-function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
+export default function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
+  const navigate = useNavigate();
+
   const { register, handleSubmit, watch, formState } = useForm();
 
   const onSubmit = async (data) => {
@@ -22,8 +24,6 @@ function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
       navigate("/linkPlaid");
     } else alert(response.data.message || "Something went wrong");
   };
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (isSignedIn) navigate("/");
@@ -215,5 +215,3 @@ function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
     </div>
   );
 }
-
-export default Signup;

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import axios from "../custom-axios";
+import { useEffect, useState } from "react";
+import axios from "../libraries/custom-axios";
 import { FaAngleDown, FaArrowUp, FaArrowDown, FaMinus } from "react-icons/fa";
 import Loading from "./Loading";
 
-const Strategy = ({
+export default function Strategy({
   strategies,
   setStrategies,
   selectedPosition,
   isSignedIn,
-}) => {
+}) {
   const [expandedStrategy, setExpandedStrategy] = useState(null);
 
   const toggleExpand = (strategyName) => {
@@ -173,7 +173,7 @@ const Strategy = ({
               <div className="p-3 rounded-lg">
                 <div className="flex gap-2 justify-between align-middle">
                   {strategy.buySell.slice(0, 2).map((type, index) => (
-                    <div className="pl-3 space-y-3">
+                    <div className="pl-3 space-y-3" key={type + index}>
                       <p
                         className={
                           "px-2 py-1 bg-white rounded-md inline " +
@@ -310,6 +310,4 @@ const Strategy = ({
       </div>
     </div>
   );
-};
-
-export default Strategy;
+}

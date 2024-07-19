@@ -1,11 +1,9 @@
-import React from "react";
-
-const Header = ({
+export default function Header({
   stockName,
   positionValue,
   todayGainLoss,
   positionGainLoss,
-}) => {
+}) {
   return (
     <div className="flex justify-between items-center p-4 bg-black text-white">
       <h1 className="text-3xl">{stockName}</h1>
@@ -28,6 +26,4 @@ const Header = ({
       </div>
     </div>
   );
-};
-
-export default Header;
+}

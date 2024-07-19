@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const ContactForm = () => {
+export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission here
     console.log("Name:", name);
     console.log("Email:", email);
     console.log("Phone:", phone);
@@ -137,12 +136,12 @@ const ContactForm = () => {
                 Ready to Get Started?
               </h2>
               <form id="contactForm">
-                <div class="">
-                  <div class="grid grid-cols-1 ">
-                    <div class="mb-1 sm:mb-4">
+                <div className="">
+                  <div className="grid grid-cols-1 ">
+                    <div className="mb-1 sm:mb-4">
                       <label
-                        for="name"
-                        class="pb-1 text-xs uppercase tracking-wider block"
+                        htmlFor="name"
+                        className="pb-1 text-xs uppercase tracking-wider block"
                       >
                         Your name
                       </label>
@@ -151,14 +150,14 @@ const ContactForm = () => {
                         id="name"
                         autoComplete="given-name"
                         placeholder="Your name"
-                        class="w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300"
+                        className="w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300"
                         name="name"
                       />
                     </div>
-                    <div class="mb-1 sm:mb-4">
+                    <div className="mb-1 sm:mb-4">
                       <label
-                        for="email"
-                        class="pb-1 text-xs uppercase tracking-wider block"
+                        htmlFor="email"
+                        className="pb-1 text-xs uppercase tracking-wider block"
                       >
                         Your email address
                       </label>
@@ -167,14 +166,14 @@ const ContactForm = () => {
                         id="email"
                         autoComplete="email"
                         placeholder="Your email address"
-                        class="w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300"
+                        className="w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300"
                         name="email"
                       />
                     </div>
-                    <div class="mb-1 sm:mb-4">
+                    <div className="mb-1 sm:mb-4">
                       <label
-                        for="phone"
-                        class="pb-1 text-xs uppercase tracking-wider block"
+                        htmlFor="phone"
+                        className="pb-1 text-xs uppercase tracking-wider block"
                       >
                         Your phone number
                       </label>
@@ -183,14 +182,14 @@ const ContactForm = () => {
                         id="phone"
                         autoComplete="tel"
                         placeholder="Your phone number"
-                        class="w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300"
+                        className="w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300"
                         name="phone"
                       />
                     </div>
-                    <div class="mb-1 sm:mb-4">
+                    <div className="mb-1 sm:mb-4">
                       <label
-                        for="subject"
-                        class="pb-1 text-xs uppercase tracking-wider block"
+                        htmlFor="subject"
+                        className="pb-1 text-xs uppercase tracking-wider block"
                       >
                         Subject
                       </label>
@@ -198,14 +197,14 @@ const ContactForm = () => {
                         type="text"
                         id="subject"
                         placeholder="Subject"
-                        class="w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300"
+                        className="w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300"
                         name="subject"
                       />
                     </div>
-                    <div class="mb-1 sm:mb-4">
+                    <div className="mb-1 sm:mb-4">
                       <label
-                        for="textarea"
-                        class="pb-1 text-xs uppercase tracking-wider block"
+                        htmlFor="textarea"
+                        className="pb-1 text-xs uppercase tracking-wider block"
                       >
                         Write your message
                       </label>
@@ -215,15 +214,15 @@ const ContactForm = () => {
                         cols="30"
                         rows="5"
                         placeholder="Write your message..."
-                        class="w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300"
+                        className="w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300"
                       ></textarea>
                     </div>
                   </div>
                 </div>
-                <div class="text-center">
+                <div className="text-center">
                   <button
                     type="submit"
-                    class="w-full bg-blue-800 text-white px-6 py-3 font-xl rounded-md sm:mb-0"
+                    className="w-full bg-blue-800 text-white px-6 py-3 font-xl rounded-md sm:mb-0"
                   >
                     Send Message
                   </button>
@@ -235,6 +234,4 @@ const ContactForm = () => {
       </div>
     </section>
   );
-};
-
-export default ContactForm;
+}

@@ -27,9 +27,7 @@ if (
       },
       app
     )
-    .listen(443, () =>
-      console.log("Server is started: https://localhost:443")
-    );
+    .listen(443, () => console.log("Server is started: https://localhost:443"));
 
   http
     .createServer((req, res) => {

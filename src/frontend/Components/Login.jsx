@@ -31,7 +31,7 @@ export default function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
   return (
     <div className="flex flex-col md:flex-row items-center mt-20 md:justify-center md:gap-10 bg-[#2563eb] text-white">
       <form
-        className="max-w-xl mx-auto md:w-1/2 bg-white text-black py-10 px-20 m-10 rounded-xl"
+        className="md:w-1/2 bg-white text-black py-10 px-8 md:px-12 lg:px-20 m-10 rounded-xl w-[80%]"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="mb-5">
@@ -63,7 +63,7 @@ export default function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
         <div className="flex justify-center mb-5">
           <button
             type="submit"
-            className={`bg-blue-600 text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 text-center ${
+            className={`bg-blue-600 text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 text-center ${
               isSubmitting
                 ? "cursor-not-allowed py-2"
                 : "hover:bg-blue-700 py-2.5"
@@ -84,7 +84,7 @@ export default function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
           <span>Don't have an account?</span>
           <Link
             to="/signup"
-            className="ml-1 text-blue-600 underline focus:outline-none"
+            className="ml-1 text-blue-600 underline focus:outline-none text-nowrap"
           >
             Sign up
           </Link>

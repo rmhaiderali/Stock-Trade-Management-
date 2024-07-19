@@ -186,7 +186,7 @@ export default function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
             <div className="flex justify-center mb-5">
               <button
                 type="submit"
-                className={`bg-blue-600 text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 text-center ${
+                className={`bg-blue-600 text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 text-center ${
                   isSubmitting
                     ? "cursor-not-allowed py-2"
                     : "hover:bg-blue-700 py-2.5"

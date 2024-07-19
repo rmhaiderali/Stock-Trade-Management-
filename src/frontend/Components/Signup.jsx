@@ -2,11 +2,17 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "./Libraries/custom-axios";
+import Loading from "./Loading";
 
 export default function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
   const navigate = useNavigate();
 
-  const { register, handleSubmit, watch, formState } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { isSubmitting },
+  } = useForm();
 
   const onSubmit = async (data) => {
     if (data.password !== data.cpassword)
@@ -45,6 +51,7 @@ export default function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
                 placeholder=""
                 required
                 {...register("name")}
+                disabled={isSubmitting}
               />
               <label
                 htmlFor="floating_name"
@@ -62,6 +69,7 @@ export default function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
                 placeholder=""
                 required
                 {...register("email")}
+                disabled={isSubmitting}
               />
               <label
                 htmlFor="floating_email"
@@ -79,6 +87,7 @@ export default function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
                 placeholder=""
                 required
                 {...register("password")}
+                disabled={isSubmitting}
               />
               <label
                 htmlFor="floating_password"
@@ -87,7 +96,7 @@ export default function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
                 Password
               </label>
             </div>
-            <div className="relative z-0 mb-5 group">
+            <div className="relative z-0 mb-6 group">
               <input
                 type="password"
                 name="floating_repeat_password"
@@ -96,6 +105,7 @@ export default function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
                 placeholder=""
                 required
                 {...register("cpassword")}
+                disabled={isSubmitting}
               />
               <label
                 htmlFor="floating_repeat_password"
@@ -173,20 +183,31 @@ export default function Signup({ isSignedIn, setIsSignedIn, setUserInfo }) {
                 </label>
               </div>
             </div> */}
-            <button
-              type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Submit
-            </button>
+            <div className="flex justify-center mb-5">
+              <button
+                type="submit"
+                className={`bg-blue-600 text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 text-center ${
+                  isSubmitting
+                    ? "cursor-not-allowed py-2"
+                    : "hover:bg-blue-700 py-2.5"
+                }`}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <div className="text-white">
+                    <Loading />
+                  </div>
+                ) : (
+                  "Submit"
+                )}
+              </button>
+            </div>
           </form>
-          <div className="mt-4 text-sm text-center md:w-1/2 ml-10">
-            <span className="text-gray-600 dark:text-gray-300">
-              If you have an account?
-            </span>
+          <div className="text-sm text-center">
+            <span>Already have an account?</span>
             <Link
               to="/login"
-              className="ml-1 text-blue-600 dark:text-blue-400 underline focus:outline-none"
+              className="ml-1 text-blue-600 underline focus:outline-none"
             >
               Login
             </Link>

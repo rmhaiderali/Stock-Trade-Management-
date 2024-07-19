@@ -2,11 +2,17 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "./Libraries/custom-axios";
+import Loading from "./Loading";
 
 export default function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
   const navigate = useNavigate();
 
-  const { register, handleSubmit, watch, formState } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { isSubmitting },
+  } = useForm();
   // console.log(watch("email"));
 
   const onSubmit = async (data) => {
@@ -38,6 +44,7 @@ export default function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
             className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             {...register("email")}
+            disabled={isSubmitting}
           />
         </div>
         <div className="mb-5">
@@ -50,19 +57,34 @@ export default function Login({ isSignedIn, setIsSignedIn, setUserInfo }) {
             className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             {...register("password")}
+            disabled={isSubmitting}
           />
         </div>
-        <button
-          type="submit"
-          className=" bg-[#2563eb] text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Submit
-        </button>
-        <div className="text-sm text-center mt-4">
-          <span className="">Don't have an account?</span>
+        <div className="flex justify-center mb-5">
+          <button
+            type="submit"
+            className={`bg-blue-600 text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 text-center ${
+              isSubmitting
+                ? "cursor-not-allowed py-2"
+                : "hover:bg-blue-700 py-2.5"
+            }`}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <div className="text-white">
+                <Loading />
+              </div>
+            ) : (
+              "Submit"
+            )}
+          </button>
+        </div>
+
+        <div className="text-sm text-center">
+          <span>Don't have an account?</span>
           <Link
             to="/signup"
-            className="ml-1 text-blue-400 underline focus:outline-none"
+            className="ml-1 text-blue-600 underline focus:outline-none"
           >
             Sign up
           </Link>

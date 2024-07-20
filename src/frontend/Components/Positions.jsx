@@ -36,7 +36,7 @@ export default function Positions({
                 )}
                 <div className="flex flex-col">
                   <div>${position.change}</div>
-                  <div className="ml-2">{position.change_percent}%</div>
+                  <div>{position.change_percent}%</div>
                 </div>
               </div>
             </span>

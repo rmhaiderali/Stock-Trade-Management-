@@ -68,7 +68,13 @@ const App = () => {
         />
         <Route
           path="/profile"
-          element={<Profile userInfo={userInfo} setUserInfo={setUserInfo} />}
+          element={
+            <Profile
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
+              isValidatingUser={isValidatingUser}
+            />
+          }
         />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/linkPlaid" element={<LinkPlaid userInfo={userInfo} />} />

@@ -11,32 +11,32 @@ export default function Positions({
           <div
             key={index}
             onClick={() => setSelectedPosition(position)}
-            className={`flex justify-between border-b-2 cursor-pointer border-black py-2 ${
+            className={`flex justify-between gap-4 border-b-2 cursor-pointer border-black p-2 ${
               selectedPosition.name === position.name
                 ? "bg-[#2563eb] text-white"
                 : ""
             } ${index === 0 ? "border-t-2" : ""}`}
           >
-            <div className="flex flex-col pl-2">
+            <div className="flex flex-col">
               <span className="text-2xl font-bold">{position.name}</span>
               <span className="text-xl  font-semibold">
                 ${position.current_price}
               </span>
             </div>
             <span
-              className={`ml-4 font-bold text-xl w-28 ${
+              className={`font-bold text-xl ${
                 position.change > 0 ? "text-green-500" : "text-red-500"
               }`}
             >
-              <div className="flex items-center ">
+              <div className="flex items-center">
                 {position.change > 0 ? (
                   <span className="mr-2">▲</span>
                 ) : (
                   <span className="mr-2">▼</span>
                 )}
                 <div className="flex flex-col">
-                  <div>${position.change}</div>
-                  <div>{position.change_percent}%</div>
+                  <div className="text-center">${position.change}</div>
+                  <div className="text-center">{position.change_percent}%</div>
                 </div>
               </div>
             </span>

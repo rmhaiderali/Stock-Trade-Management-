@@ -6,9 +6,11 @@ export default function Market({ markets }) {
         {markets.map((market, index) => (
           <div
             key={index}
-            className={`flex justify-between border-b-2 border-black py-2 ${index === 0 ? "border-t-2" : ""}`}
+            className={`flex justify-between gap-4 border-b-2 border-black p-2 ${
+              index === 0 ? "border-t-2" : ""
+            }`}
           >
-            <div className="flex flex-col">
+            <div className="flex flex-col flex-grow">
               <marquee scrollamount="4" className="text-2xl font-bold">
                 {market.name}
               </marquee>
@@ -17,7 +19,7 @@ export default function Market({ markets }) {
               </span>
             </div>
             <span
-              className={`ml-4 font-bold text-xl mr-5 ${
+              className={`font-bold text-xl ${
                 market.change > 0
                   ? "text-green-500  rounded-2xl"
                   : "text-red-500 rounded-2xl"
@@ -30,8 +32,8 @@ export default function Market({ markets }) {
                   <span className="mr-2">▼</span>
                 )}
                 <div className="flex flex-col">
-                  <div>${market.change.toFixed(2)}</div>
-                  <div>{market.percent}%</div>
+                  <div className="text-center">${market.change.toFixed(2)}</div>
+                  <div className="text-center">{market.percent}%</div>
                 </div>
               </div>
             </span>

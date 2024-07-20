@@ -1,20 +1,31 @@
+import fs from "fs";
 import format from "../utils/formatResponse.js";
 
 export default async function changeName(req, res) {
   const { name, email } = req.body;
 
   if (req.file) {
-    // max 5MB
-    if (req.file.size > 5 * 1024 * 1024)
-      return res
-        .status(400)
-        .json(format(false, "Profile picture size should be less than 5MB"));
+    if (req.file.size > 5 * 1024 * 1024) {
+      fs.unlinkSync(req.file.path);
+      return res.json({
+        success: false,
+        messages: "File size must be less than 5MB",
+      });
+    }
 
-    const base64Image = req.file.buffer.toString("base64");
+    if (!["image/png", "image/jpeg"].includes(req.file.mimetype)) {
+      fs.unlinkSync(req.file.path);
+      return res.json({
+        success: false,
+        messages: "Only png and jpg images are allowed",
+      });
+    }
 
-    const mimeType = req.file.mimetype;
+    const newFileName = Date.now() + "_" + req.file.originalname;
 
-    req.user.profilePicture = `data:${mimeType};base64,${base64Image}`;
+    fs.renameSync(req.file.path, "uploads/" + newFileName);
+
+    req.user.profilePicture = newFileName;
   }
 
   if (name) {

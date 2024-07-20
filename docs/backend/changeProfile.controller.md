@@ -26,7 +26,7 @@ The request body should be in `multipart/form-data` format and can include the f
   "data": {
     "name": "New Name",
     "email": "new.email@example.com",
-    "profilePicture": "data:image/jpeg;base64,..."
+    "profilePicture": "1721464880581_12345.jpg"
   }
 }
 ```

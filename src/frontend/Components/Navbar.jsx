@@ -30,9 +30,10 @@ export default function Navbar({ userInfo, setIsSignedIn, setUserInfo }) {
         </Link>
         {userInfo && (
           <img
-            className="h-8 w-8 rounded-full bg-red-500 cursor-pointer"
+            className="h-8 w-8 rounded-full cursor-pointer"
             src={userInfo?.profilePicture || "/default_profile.jpg"}
             onClick={() => setIsModalVisible(true)}
+            onError={(e) => (e.target.src = "/default_profile.jpg")}
           />
         )}
       </nav>

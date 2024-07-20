@@ -47,15 +47,15 @@ export default function Profile({ userInfo, setUserInfo }) {
                 Profile
               </h1>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div
-                  className="mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full bg-cover bg-center bg-no-repeat"
-                  style={{
-                    backgroundImage: `url(${
-                      profilePicture || "/default_profile.jpg"
-                    })`,
-                  }}
-                >
-                  <div className="bg-white/90 rounded-full w-6 h-6 text-center ml-28 mt-4">
+                <div className="flex justify-center">
+                  <div>
+                  <img
+                    className="w-[140px] h-[140px] bg-blue-300/20 rounded-full object-cover"
+                    src={profilePicture || "/default_profile.jpg"}
+                    onError={(e) => (e.target.src = "/default_profile.jpg")}
+                  />
+                  <div className="flex items-center bg-white/90 rounded-full w-6 h-6 text-center relative bottom-[125px] left-[115px]"
+                   style={{bottom:"140px", left: "100px"}}>
                     <input
                       type="file"
                       id="profilePicture"
@@ -93,8 +93,9 @@ export default function Profile({ userInfo, setUserInfo }) {
                       </svg>
                     </label>
                   </div>
+                  </div>
                 </div>
-                <h2 className="text-center mt-6 font-semibold dark:text-gray-300">
+                <h2 className="text-center font-semibold dark:text-gray-300">
                   Profile Information
                 </h2>
                 <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">

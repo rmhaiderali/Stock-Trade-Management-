@@ -22,7 +22,7 @@ Authorization: Bearer <your_jwt_token>
   "data": {
     "email": "user@example.com",
     "name": "John Doe",
-    "profilePicture": "data:image/jpeg;base64,...",
+    "profilePicture": "1721464880581_12345.jpg",
     "isPlaidLinked": false
   }
 }

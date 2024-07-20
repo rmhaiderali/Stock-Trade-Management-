@@ -30,7 +30,7 @@ A JSON object indicating the success or failure of the sign-in attempt. On succe
   "data": {
     "email": "user@example.com",
     "name": "John Doe",
-    "profilePicture": "data:image/jpeg;base64,...",
+    "profilePicture": "1721464880581_12345.jpg",
     "isPlaidLinked": false
   }
 }

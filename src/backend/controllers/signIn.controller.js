@@ -23,14 +23,14 @@ export default async function signIn(req, res) {
   }
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: "12h",
+    expiresIn: "30d",
   });
 
   res.cookie("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: 3600000 * 12, // 12 hours
+    maxAge: 8.64e7 * 30, // 30 days
   });
 
   const resUser = user.toObject();

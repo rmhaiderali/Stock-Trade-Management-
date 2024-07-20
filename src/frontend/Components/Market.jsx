@@ -1,6 +1,6 @@
 export default function Market({ markets }) {
   return (
-    <div className="p-4 rounded-lg ">
+    <div className="py-4 rounded-lg ">
       <h2 className="text-3xl mb-4 font-bold">Markets</h2>
       <div className="max-h-[390px] overflow-y-auto scrollbar-thin scrollbar-thumb-white scrollbar-track-[#2563eb] scrollbar-thumb-rounded-full">
         {markets.map((market, index) => (

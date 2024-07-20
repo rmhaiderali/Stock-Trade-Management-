@@ -35,8 +35,12 @@ export default function Positions({
                   <span className="mr-2">▼</span>
                 )}
                 <div className="flex flex-col">
-                  <div className="text-center">${position.change}</div>
-                  <div className="text-center">{position.change_percent}%</div>
+                  <div className="text-center">
+                    ${Math.abs(position.change)}
+                  </div>
+                  <div className="text-center">
+                    {Math.abs(position.change_percent)}%
+                  </div>
                 </div>
               </div>
             </span>

@@ -32,8 +32,8 @@ export default function Market({ markets }) {
                   <span className="mr-2">▼</span>
                 )}
                 <div className="flex flex-col">
-                  <div className="text-center">${market.change.toFixed(2)}</div>
-                  <div className="text-center">{market.percent}%</div>
+                  <div className="text-center">${Math.abs(market.change)}</div>
+                  <div className="text-center">{Math.abs(market.percent)}%</div>
                 </div>
               </div>
             </span>

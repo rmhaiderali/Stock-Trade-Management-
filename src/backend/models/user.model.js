@@ -17,16 +17,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  plaidAccessToken: {
+  profilePicture: {
     type: String,
+    default: "/default_profile.jpg",
   },
   isPlaidLinked: {
     type: Boolean,
     default: false,
   },
-  profilePicture: {
+  plaidAccessToken: {
     type: String,
-    default: "/default_profile.jpg",
+    default: null,
   },
 });
 

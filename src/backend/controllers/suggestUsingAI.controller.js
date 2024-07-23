@@ -1,10 +1,10 @@
 import OpenAI from "openai";
-import format from "../utils/formatResponse.js";
-import getStocks, { getRandomElement } from "../utils/getStocks.js";
-import dateandtime from "date-and-time";
 import axios from "axios";
 import pc from "picocolors";
-import bluebird from "bluebird";
+import dateandtime from "date-and-time";
+import format from "../utils/formatResponse.js";
+import asyncForEach from "../utils/asyncForEach.js";
+import getStocks, { getRandomElement } from "../utils/getStocks.js";
 
 export default async function suggestUsingAI(req, res) {
   const {
@@ -180,19 +180,16 @@ export default async function suggestUsingAI(req, res) {
   const isDateValid = (date) => !isNaN(date);
 
   if (stock !== "stock")
-    await bluebird.map(
+    await asyncForEach(
       strategies,
       async (strategy) =>
-        await bluebird.map(strategy.expirationDate, async (date, index) => {
+        await asyncForEach(strategy.expirationDate, async (date, index) => {
           const expirationDate = new Date(strategy.expirationDate[index]);
-
-          console.log();
 
           if (!isDateValid(expirationDate)) {
             console.log(
-              pc.yellow(
-                `using gpt optionPrice strikePrice because date provided by GPT (${strategy.expirationDate[index]}) is invalid `
-              )
+              pc.yellow(`
+                using gpt optionPrice strikePrice because date provided by GPT (${strategy.expirationDate[index]}) is invalid`)
             );
             if (!strategy.pricesFrom) strategy.pricesFrom = [];
             strategy.pricesFrom[index] = "GPT";
@@ -210,8 +207,6 @@ export default async function suggestUsingAI(req, res) {
 
           const url = `https://api.polygon.io/v3/snapshot/options/${stock}?expiration_date.gt=${polygonExpirationDateGt}&expiration_date.lt=${polygonExpirationDateLt}&limit=200&apiKey=${process.env.POLYGON_API_KEY}`;
 
-          console.log(url);
-
           const { data: polygonResponse } = await axios.get(url, {
             validateStatus: () => true,
           });
@@ -223,6 +218,9 @@ export default async function suggestUsingAI(req, res) {
                 .toLowerCase()
                 .includes(e.details.contract_type)
           );
+
+          console.log();
+          console.log(url);
 
           const final = getRandomElement(filteredPolygonResponse);
 

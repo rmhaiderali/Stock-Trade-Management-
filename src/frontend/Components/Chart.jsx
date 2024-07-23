@@ -36,7 +36,7 @@ export default function Chart({ selectedPosition }) {
           }`}
         >
           <span className="text-2xl md:text-4xl font-bold">
-            ${todayGainLoss.toFixed(2)}
+            ${Math.abs(todayGainLoss.toFixed(2))}
           </span>
           <span className="text-sm md:text-lg text-white text-right">
             Today's Gain/Loss
@@ -48,7 +48,7 @@ export default function Chart({ selectedPosition }) {
           }`}
         >
           <span className="text-2xl md:text-4xl font-bold">
-            ${positionGainLoss.toFixed(2)}
+            ${Math.abs(positionGainLoss.toFixed(2))}
           </span>
           <span className="text-sm md:text-lg text-white text-right">
             Position Gain/Loss

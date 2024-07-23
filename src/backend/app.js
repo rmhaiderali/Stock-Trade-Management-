@@ -55,7 +55,7 @@ app.get(
 app.get("/api/plaid/getPositions", queryUser, asyncErrorHandler(getPositions));
 app.get("/api/yahooFinance", asyncErrorHandler(yahooFinances));
 
-app.use(express.static("uploads"));
+app.use(express.static("uploads", { maxAge: 86400000 }));
 
 app.use((err, req, res, next) => {
   return res.status(500).json({ success: false, message: err.message });
